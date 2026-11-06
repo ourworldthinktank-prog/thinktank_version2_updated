@@ -16,9 +16,6 @@ export default async function EventsPage() {
     <Shell>
       <PageBanner
         variant="events"
-        eyebrow="Events"
-        title={<>Moments that bring us <span style={{ color: "var(--gold)" }}>together</span></>}
-        intro="Summits, conferences, roundtables and workshops. Dates to be announced."
       />
 
       <section className="sec">
