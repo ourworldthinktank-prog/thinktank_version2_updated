@@ -1,5 +1,4 @@
 import Logo from "./Logo";
-import NewsletterForm from "./NewsletterForm";
 import { BHARAT_SUMMIT_URL } from "@/lib/content";
 
 // "Connect" in the header jumps here (id="connect"): every page link, the legal pages and the newsletter.

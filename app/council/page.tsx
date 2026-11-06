@@ -25,9 +25,6 @@ export default async function CouncilPage() {
     <Shell>
       <PageBanner
         variant="council"
-        eyebrow="The Council"
-        title={<>The people behind the <span style={{ color: "var(--gold)" }}>mission</span></>}
-        intro="Leadership, executive team and trustees working together for a fairer world."
       />
 
       <div className="council-body">
