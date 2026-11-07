@@ -1,0 +1,94 @@
+/* =====================================================================
+   Globe journey homepage (loaded after home.css, so it overrides it)
+   ===================================================================== */
+
+/* ---------- fixed background: aurora and stars ---------- */
+.fx-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:linear-gradient(180deg,#05081C 0%,#0A1040 55%,#0E0A33 100%)}
+.fx-bg i{position:absolute;border-radius:50%;filter:blur(80px);mix-blend-mode:screen;will-change:transform}
+.fx-bg i:nth-child(1){width:60vw;height:60vw;left:-15%;top:-10%;background:radial-gradient(closest-side,rgba(59,63,216,.55),transparent);animation:au1 26s ease-in-out infinite}
+.fx-bg i:nth-child(2){width:55vw;height:55vw;right:-15%;top:10%;background:radial-gradient(closest-side,rgba(138,63,224,.45),transparent);animation:au2 32s ease-in-out infinite}
+.fx-bg i:nth-child(3){width:50vw;height:50vw;left:25%;bottom:-25%;background:radial-gradient(closest-side,rgba(31,193,222,.32),transparent);animation:au3 38s ease-in-out infinite}
+.fx-bg span{position:absolute;inset:0;opacity:.8;background-image:radial-gradient(1.2px 1.2px at 20px 30px,#fff,transparent),radial-gradient(1px 1px at 120px 90px,#cfd8ff,transparent),radial-gradient(1.4px 1.4px at 210px 50px,#fff,transparent),radial-gradient(1px 1px at 60px 150px,#ffd9b0,transparent),radial-gradient(1.5px 1.5px at 260px 130px,#9fe8ff,transparent);background-size:300px 200px;animation:twk 6s ease-in-out infinite}
+.home-dark{background:#05081C}
+
+/* ---------- the canvas ---------- */
+.gl-canvas{position:fixed;left:0;top:0;width:100%;height:100%;z-index:1;pointer-events:none;display:block}
+.gl-canvas.loading{z-index:60}
+.home-dark main{position:relative;z-index:2}
+.home-dark footer{position:relative;z-index:2}
+.home-dark .site-header{transition:opacity .9s .3s,transform .9s .3s,background .3s}
+html[data-intro="run"] .home-dark .site-header{opacity:0;transform:translateY(-30px);pointer-events:none}
+
+/* ---------- loader ---------- */
+.gl-veil{display:none;position:fixed;inset:0;z-index:55;background:radial-gradient(900px 700px at 50% 50%,#0E1550 0%,#05081C 72%);color:#fff;transition:opacity 1.1s ease .1s}
+html[data-intro="run"] .gl-veil{display:block}
+.gl-veil.off{opacity:0;pointer-events:none}
+.gl-brand{position:absolute;left:24px;top:22px;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.gl-skip{position:absolute;right:20px;top:14px;padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.28);color:#fff;font-size:.8rem;font-weight:600;background:rgba(255,255,255,.06);backdrop-filter:blur(6px);transition:.25s}
+.gl-skip:hover{background:#fff;color:#0B1B44}
+.gl-pct{position:absolute;left:0;right:0;bottom:9%;text-align:center;font-family:var(--serif);font-weight:700;font-size:clamp(2.6rem,7vw,4.4rem);line-height:1}
+.gl-pct span{font-size:.5em;opacity:.6;margin-left:2px}
+.gl-cap{position:absolute;left:0;right:0;bottom:5.5%;text-align:center;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:#9FD8FF}
+
+/* ---------- hero (transparent: the globe shows through) ---------- */
+.hm-hero{background:none;overflow:visible;isolation:auto;min-height:calc(100svh - 84px);display:grid;align-items:center}
+.hm-grid{padding:40px 0 70px;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
+.gs-hero{position:relative;width:min(100%,560px);aspect-ratio:1;margin:0 auto}
+.gs-hero .orbit.o1{inset:-2%}.gs-hero .orbit.o2{inset:-14%}.gs-hero .orbit.o3{inset:-26%}
+.hm-globe{width:100%}
+.hm-hero h1{font-size:clamp(2.8rem,5.6vw,5.2rem);line-height:1.02;letter-spacing:-.01em}
+.scroll-cue{position:absolute;left:50%;bottom:10px;translate:-50% 0}
+
+/* ---------- about (globe drifts in behind) ---------- */
+.about-c{min-height:100svh;display:grid;place-items:center;padding:120px 0;position:relative}
+.about-c-in{text-align:center;display:grid;justify-items:center;gap:26px;max-width:1040px}
+.about-c-k{display:flex;align-items:center;gap:14px;font-size:.78rem;letter-spacing:.24em;text-transform:uppercase;color:#9FD8FF;font-weight:600}
+.about-c-k .bars{display:flex;gap:4px;margin:0}
+.about-c-txt .wr-line{font-family:var(--serif);font-weight:600;font-size:clamp(1.45rem,3.1vw,2.7rem);line-height:1.42;text-align:center;text-shadow:0 2px 40px rgba(5,8,28,.95),0 0 12px rgba(5,8,28,.7)}
+.about-c-link{margin-top:6px}
+
+/* ---------- three pillars (the three worlds land here) ---------- */
+.pl3-sec{padding:110px 0 90px;position:relative;min-height:100svh}
+.pl3-head{text-align:center;margin-bottom:60px}
+.pl3-eyebrow{display:inline-block;padding:8px 16px;border:1px solid rgba(255,255,255,.28);border-radius:999px;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:#FFD08A;font-weight:600}
+.pl3-head h2{font-family:var(--serif);font-weight:800;font-size:clamp(2rem,5vw,4rem);margin-top:18px;line-height:1.08}
+.pl3-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,3vw,48px);align-items:start}
+.pl3:nth-child(2){margin-top:70px}
+.pl3-orb{width:100%;max-width:360px;aspect-ratio:1;margin:0 auto 26px}
+.pl3-body{position:relative;text-align:left}
+.pl3-num{font-family:var(--sans,Inter,sans-serif);font-weight:800;font-size:clamp(4.4rem,9vw,8rem);line-height:.9;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.28);letter-spacing:-.03em;transition:color .5s,-webkit-text-stroke-color .5s}
+.pl3:hover .pl3-num{background:linear-gradient(135deg,#FFC46B,#FF5C8A);-webkit-background-clip:text;background-clip:text;-webkit-text-stroke-color:transparent}
+.pl3-tag{display:inline-block;margin:14px 0 12px;padding:7px 14px;border:1px solid rgba(255,255,255,.28);border-radius:999px;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:#FFD08A;font-weight:600}
+.pl3 h3{font-family:var(--serif);font-weight:800;font-size:clamp(1.7rem,3vw,2.5rem);line-height:1.08;color:#fff;position:relative;padding-bottom:16px;margin-bottom:12px}
+.pl3 h3::after{content:"";position:absolute;left:0;bottom:0;width:70px;height:3px;border-radius:3px;background:linear-gradient(90deg,#4A6BFF,#2DC6A8);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.pl3:hover h3::after{width:140px}
+.pl3 p{color:var(--ink3);font-size:1rem;max-width:340px}
+.pl3-go{display:inline-flex;align-items:center;gap:8px;margin-top:16px;color:#FFB48F;font-weight:600;font-size:.9rem;transition:gap .3s}
+.pl3-go:hover{gap:14px}
+
+/* ---------- statement ---------- */
+.stmt{background:transparent}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .hm-hero{min-height:0}
+  .hm-grid{padding:30px 0 50px;grid-template-columns:1fr}
+  .hm-globe{order:-1;margin-bottom:6px}
+  .gs-hero{width:min(64%,290px)}
+  .gs-hero .orbit.o3{display:none}
+  .about-c{padding:90px 0;min-height:90svh}
+  .pl3-sec{padding:80px 0 40px;min-height:0}
+  .pl3-grid{grid-template-columns:1fr;gap:56px}
+  .pl3:nth-child(2){margin-top:0}
+  .pl3-orb{max-width:300px}
+  .pl3-body{text-align:center;display:grid;justify-items:center}
+  .pl3 h3::after{left:50%;translate:-50% 0}
+  .pl3-num{font-size:4.6rem}
+}
+@media (prefers-reduced-motion: reduce){
+  .fx-bg i,.fx-bg span{animation:none!important}
+  .gl-veil{display:none!important}
+  html[data-intro="run"] .home-dark .site-header{opacity:1;transform:none;pointer-events:auto}
+}
+
+html[data-intro="run"] .cookie{display:none}

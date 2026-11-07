@@ -261,7 +261,6 @@ export default function AboutPage() {
                 <article className="ab-aim ab-rv" style={stagger(i)} key={a.n}>
                   <span className="ab-aim-num">{a.n} /</span>
                   <h3>{a.t}</h3>
-                  <span className="ab-aim-tag">{a.tag}<span className="ab-aim-arrow">↗</span></span>
                 </article>
               ))}
             </div>

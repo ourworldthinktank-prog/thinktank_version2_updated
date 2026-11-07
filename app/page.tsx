@@ -1,16 +1,53 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import HeroGlobe from "@/components/HeroGlobe";
-import MissionSections from "@/components/MissionSections";
-import PeopleCarousel from "@/components/PeopleCarousel";
+import CouncilBanner from "@/components/CouncilBanner";
+import HeroWords from "@/components/HeroWords";
+import Pillars from "@/components/Pillars";
+import WordReveal from "@/components/WordReveal";
 import CookieBanner from "@/components/CookieBanner";
+import GlobeJourney from "@/components/GlobeJourney";
+import HomeFX from "@/components/HomeFX";
 import Reveal from "@/components/Reveal";
-import { ArrowIcon } from "@/components/Icons";
+import { ArrowIcon, PlayIcon } from "@/components/Icons";
 import { getNextEvent, getPeople } from "@/lib/content";
+import "./home.css";
+import "./journey.css";
+import "./globe.css";
+import { ClosingStage } from "./about/ScrollStages";
+
+// Decides before first paint whether the intro runs (once per session, never for reduced motion).
+// Add ?intro=1 to the address to replay it.
+const INTRO_FLAG = `try{var s=sessionStorage.getItem('owii-intro');var r=matchMedia('(prefers-reduced-motion: reduce)').matches;if((s||r)&&location.search.indexOf('intro=1')<0){document.documentElement.setAttribute('data-intro','skip')}else{document.documentElement.setAttribute('data-intro','run')}}catch(e){document.documentElement.setAttribute('data-intro','skip')}`;
+
+const closingWords = [
+  ..."Our world cannot be led by autocrats; it must be led by".split(" ").map((t) => ({ t, hl: false })),
+  ..."democracies that care for people and the planet.".split(" ").map((t) => ({ t, hl: true })),
+];
+const marqueeText = "DEMOCRACY ✦ PEOPLE ✦ PLANET ✦ ".repeat(3);
+
+const WORDS = ["Democracy", "Equity", "Climate Justice", "Digital Futures", "Peace", "Partnership", "Fair Growth", "People"];
+
+// Hover or tap a pill and the globe turns to that part of the world ("lon,lat").
+const ABOUT_PILLS = [
+  { label: "Empower citizens", at: "-62,-8" },
+  { label: "Restore public trust", at: "10,48" },
+  { label: "Build a fairer global order", at: "22,2" },
+  { label: "Home base: India", at: "78,22" },
+];
+
+function Split({ text, start = 0 }: { text: string; start?: number }) {
+  return (
+    <>
+      {text.split(" ").map((w, i) => (
+        <span className="kw" key={i}><span style={{ ["--i" as string]: i + start }}>{w}</span></span>
+      ))}
+    </>
+  );
+}
 
 function SectionHead({ title, blurb, href, cta = "View all" }: { title: string; blurb?: string; href?: string; cta?: string }) {
   return (
-    <div className="sec-head rv">
+    <div className="sec-head" data-r>
       <div>
         <div className="bars"><i /><i /><i /></div>
         <h2>{title}</h2>
@@ -21,93 +58,90 @@ function SectionHead({ title, blurb, href, cta = "View all" }: { title: string; 
   );
 }
 
-function Hero({ eventHref }: { eventHref: string }) {
-  return (
-    <section className="hero" id="about">
-      <div className="hero-stripes" aria-hidden="true"><span /><span /><span /><span /><span /></div>
-      <div className="wrap">
-        <div className="hero-grid">
-          <div>
-            <div className="eyebrow">People &nbsp;·&nbsp; Democracy &nbsp;·&nbsp; A Fairer Tomorrow</div>
-            <h1>Ideas for<br />a fairer world<em>.</em></h1>
-            <p className="hero-lead">The Our-World Institute and Initiative brings progressives together to build alternatives and renew democracy.</p>
-            <p className="hero-lead">We work to empower citizens, restore public trust, and shape a fairer global order, through new ideas, practical programs, and stronger organizations.</p>
-            <div className="hero-cta">
-              <a className="btn btn-primary" href="#focus">Explore <ArrowIcon /></a>
-            </div>
-          </div>
-          <HeroGlobe />
-        </div>
-
-        <div className="pillars">
-          <a href={eventHref} target="_blank" rel="noopener noreferrer" className="pillar rv">
-            <span className="num">01</span>
-            <span><b>Annual Summit</b><small>A global gathering of progressives</small></span>
-          </a>
-          <a href="#approach" className="pillar rv">
-            <span className="num">02</span>
-            <span><b>Research &amp; Policy</b><small>Evidence for change</small></span>
-          </a>
-          <a href="#approach" className="pillar rv">
-            <span className="num">03</span>
-            <span><b>Global Network</b><small>People, ideas, partnerships</small></span>
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function UpcomingEvent({ event }: { event: Awaited<ReturnType<typeof getNextEvent>> }) {
-  return (
-    <section className="sec" id="events" style={{ paddingTop: 30 }}>
-      <div className="wrap">
-        <SectionHead title="Upcoming Events" href={event.href} cta="Bharat Summit website" />
-        <article className="event rv">
-          <div className="date"><b>{event.dateLabel}</b><small>DATES TO BE ANNOUNCED</small></div>
-          <div className="ev-body">
-            <span className="tag" style={{ color: "var(--coral)" }}>{event.status}</span>
-            <h3>{event.title}</h3>
-            <p>{event.summary}</p>
-            <a className="btn btn-primary btn-sm" href={event.href} target="_blank" rel="noopener noreferrer" style={{ marginBottom: 18 }}>
-              Visit Bharat Summit website <ArrowIcon size={16} />
-            </a>
-            <div className="chips">
-              <span className="chip">📍 {event.location}</span>
-              <span className="chip">🗓 Date to be announced</span>
-            </div>
-          </div>
-          <div className="ev-art" aria-hidden="true">
-            <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
-              <circle cx="300" cy="150" r="130" fill="#1FC1DE" opacity=".35" />
-              <circle cx="360" cy="60" r="70" fill="#F7A21B" opacity=".55" />
-              <g fill="none" stroke="#0F2A5C" strokeWidth="2.5" opacity=".75" strokeLinejoin="round">
-                <path d="M210 240v-90h20v-30l15-18 15 18v30h20v90" />
-                <path d="M290 240v-70h24v-26l14-16 14 16v26h24v70" />
-                <path d="M335 240v-34a14 14 0 0 1 28 0v34" />
-                <path d="M170 240v-50h24v50" />
-              </g>
-            </svg>
-          </div>
-        </article>
-      </div>
-    </section>
-  );
-}
-
 export default async function Home() {
   const [people, event] = await Promise.all([getPeople(), getNextEvent()]);
 
   return (
     <>
-      <Header />
-      <main id="main">
-        <Hero eventHref={event.href} />
-        <PeopleCarousel people={people} />
-        <UpcomingEvent event={event} />
-      </main>
-      <Footer />
+      <script dangerouslySetInnerHTML={{ __html: INTRO_FLAG }} />
+      <div className="home-dark">
+        <GlobeJourney />
+        <div className="scroll-progress" aria-hidden="true" />
+        <div className="cursor-glow" aria-hidden="true" />
+        <Header />
+        <main id="main">
+          {/* HERO */}
+          <section className="hm-hero" id="about">
+            <div className="wrap">
+              <div className="hm-grid">
+                <div className="hm-copy">
+                  <div className="eyebrow hm-in" style={{ ["--d" as string]: "0ms" }}>People &nbsp;·&nbsp; Democracy &nbsp;·&nbsp; A Fairer Tomorrow</div>
+                  <h1 aria-label="Ideas for a fairer world.">
+                    <span className="hw-line" aria-hidden="true"><Split text="Ideas for" /></span>
+                    <HeroWords />
+                    <span className="hw-line" aria-hidden="true"><Split text="world" start={4} /><em>.</em></span>
+                  </h1>
+                  <p className="hero-lead hm-in" style={{ ["--d" as string]: "900ms" }}>Research, advocacy and global collaboration for stronger democracies, greater equity and a more sustainable, peaceful planet.</p>
+                  <div className="hero-cta hm-in" style={{ ["--d" as string]: "1100ms" }}>
+                    <a className="btn btn-primary" href="#focus" data-magnetic>Explore our work <ArrowIcon /></a>
+                  </div>
+                </div>
+                {/* The globe is drawn here by <GlobeJourney />; the Democracy / Equity / Planet chips orbit it */}
+                <div className="hm-globe hm-in" style={{ ["--d" as string]: "500ms" }}>
+                  <div className="gj-slot" data-gs="hero" aria-hidden="true" />
+                </div>
+              </div>
+            </div>
+            <a className="scroll-cue hm-in" style={{ ["--d" as string]: "1600ms" }} href="#about-us" aria-label="Scroll down"><span /></a>
+          </section>
+
+          {/* MARQUEE */}
+          <div className="strip" aria-hidden="true">
+            <div className="strip-track">
+              {[0, 1].map((k) => (
+                <div className="strip-row" key={k}>
+                  {WORDS.map((w) => <span key={w + k}>{w}<i /></span>)}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ABOUT: copy on the left, the globe parks on the right */}
+          <section className="gj-about" id="about-us">
+            <div className="wrap gj-about-grid">
+              <div className="gj-about-copy">
+                <div className="about-c-k" data-r><span className="bars"><i /><i /><i /></span>About us</div>
+                <WordReveal className="about-c-txt gj-about-txt" lines={["The Our-World Institute and Initiative brings progressives together to build alternatives and renew democracy. We work to empower citizens, restore public trust, and shape a fairer global order, through new ideas, practical programs, and stronger organizations."]} marks={{ democracy: "glow", alternatives: "glow" }} />
+                <ul className="gj-pills" data-r aria-label="Turn the globe">
+                  {ABOUT_PILLS.map((p) => (
+                    <li key={p.label}><button type="button" className="gj-pill" data-gj-focus={p.at}>{p.label}</button></li>
+                  ))}
+                </ul>
+                <a className="link about-c-link" href="/about" data-r>Read more <ArrowIcon size={16} /></a>
+              </div>
+              <div>
+                <div className="gj-about-globe" data-gs="about" aria-hidden="true" />
+                <p className="gj-hint" aria-hidden="true">Drag the globe to explore</p>
+              </div>
+            </div>
+          </section>
+
+          {/* THREE PILLARS: the globe pours into three worlds here (it finds #focus) */}
+          <Pillars summitHref={event.href} />
+
+          {/* STATEMENT: same animated closing block as the About page */}
+          <section className="gj-close" id="why">
+            <div className="wrap">
+              <ClosingStage words={closingWords} marquee={marqueeText} />
+            </div>
+          </section>
+
+          {/* <CouncilBanner people={people} /> */}
+        </main>
+        <Footer />
+      </div>
       <CookieBanner />
+      <HomeFX />
       <Reveal />
     </>
   );

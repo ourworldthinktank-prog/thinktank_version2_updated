@@ -1,0 +1,72 @@
+/* ---------- Globe: canvas, hero slot, floating chips ---------- */
+.gj-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block; }
+[data-gs] { cursor: grab; }
+.gj-slot { width: min(100%, 640px, 72vh); aspect-ratio: 1 / 1; margin-inline: auto; }
+
+.gj-chips { position: fixed; inset: 0; z-index: 3; pointer-events: none; }
+.gj-chip {
+  position: absolute; left: 0; top: 0; display: grid; gap: 2px; text-align: left;
+  padding: 10px 16px 11px; border-radius: 16px; border: 1px solid rgba(255,255,255,.2);
+  background: rgba(11,16,48,.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  color: #fff; font: inherit; cursor: pointer; opacity: 0; pointer-events: none;
+  will-change: transform, opacity; transition: border-color .25s ease, background .25s ease;
+}
+.gj-chip b { display: flex; align-items: center; gap: 8px; font-size: .95rem; letter-spacing: -.01em; }
+.gj-chip b::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #C9E879; box-shadow: 0 0 12px #C9E879; }
+.gj-chip:nth-child(2) b::before { background: #27C6B7; box-shadow: 0 0 12px #27C6B7; }
+.gj-chip:nth-child(3) b::before { background: #8B5CFF; box-shadow: 0 0 12px #8B5CFF; }
+.gj-chip span { font-size: .72rem; color: rgba(255,255,255,.66); }
+.gj-chip:hover, .gj-chip:focus-visible { border-color: #C9E879; background: rgba(39,198,183,.22); outline: none; }
+
+/* ---------- Hero: rotating word ---------- */
+.hwr { display: inline-grid; padding-bottom: .1em; }
+.hwr-w {
+  grid-area: 1 / 1; white-space: nowrap; opacity: 0; transform: translateY(70%);
+  background: linear-gradient(90deg, #C9E879, #27C6B7 70%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+  transition: transform .7s cubic-bezier(.2,.75,.25,1), opacity .5s ease;
+}
+.hwr-w.on { opacity: 1; transform: none; }
+.hwr-w.out { opacity: 0; transform: translateY(-70%); }
+@media (prefers-reduced-motion: reduce) {
+  .hwr-w, .hwr-w.out { transform: none; }
+}
+
+/* ---------- About: copy left, globe right ---------- */
+.gj-about { position: relative; display: flex; align-items: center; min-height: 110vh; padding: clamp(90px, 12vw, 170px) 0; }
+.gj-about-grid {
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  gap: clamp(24px, 5vw, 80px); align-items: center; width: 100%;
+}
+.gj-about-copy { position: relative; z-index: 2; max-width: 640px; }
+.gj-about-txt {
+  max-width: none !important; margin: 0 0 28px !important; text-align: left !important;
+  font-size: clamp(1.35rem, 2.3vw, 2rem) !important; line-height: 1.45 !important; letter-spacing: -.02em;
+}
+.gj-pills { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 30px; padding: 0; list-style: none; }
+.gj-pill {
+  padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.22);
+  background: rgba(255,255,255,.05); color: inherit; font: inherit; font-size: .86rem; font-weight: 650;
+  cursor: pointer; transition: border-color .25s ease, background .25s ease, transform .25s ease;
+}
+.gj-pill:hover, .gj-pill:focus-visible {
+  border-color: #C9E879; background: rgba(201,232,121,.14); transform: translateY(-2px); outline: none;
+}
+.gj-about-globe { width: 100%; aspect-ratio: 1 / 1; max-height: 78vh; }
+.gj-hint { margin: 12px 0 0; text-align: center; font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; opacity: .55; }
+
+@media (max-width: 900px) {
+  .gj-about { min-height: auto; }
+  .gj-about-grid { grid-template-columns: 1fr; }
+  .gj-about-globe { order: -1; width: min(100%, 520px); margin: 0 auto; }
+  .gj-hint { display: none; }
+}
+
+/* ---------- Pillars come in as the globe splits ---------- */
+/* Only active once the globe script has found #focus, so nothing is hidden without JS. */
+html[data-gj="on"] #focus {
+  opacity: clamp(0, calc((var(--gj-s, 1) - .15) * 2.2), 1);
+}
+
+/* ---------- Closing statement (same component as the About page) ---------- */
+.gj-close { position: relative; z-index: 1; padding: clamp(70px, 10vw, 140px) 0; }
