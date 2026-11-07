@@ -81,7 +81,6 @@ export default async function Home() {
                     <HeroWords />
                     <span className="hw-line" aria-hidden="true"><Split text="world" start={4} /><em>.</em></span>
                   </h1>
-                  <p className="hero-lead hm-in" style={{ ["--d" as string]: "900ms" }}>Research, advocacy and global collaboration for stronger democracies, greater equity and a more sustainable, peaceful planet.</p>
                   <div className="hero-cta hm-in" style={{ ["--d" as string]: "1100ms" }}>
                     <a className="btn btn-primary" href="#focus" data-magnetic>Explore our work <ArrowIcon /></a>
                   </div>
