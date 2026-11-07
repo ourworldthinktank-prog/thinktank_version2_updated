@@ -274,7 +274,7 @@ export default function AboutPage() {
             <div className="ab-pillars-head ab-rv">
               <div>
                 <div className="ab-eyebrow"><i /><i /><i /></div>
-                <span className="ab-kicker">The way forward</span>
+                <span className="ab-kicker">The Path forward</span>
                 <h2 className="ab-h2">How we <span className="ab-accent">get there.</span></h2>
               </div>
               <p className="ab-sub">
