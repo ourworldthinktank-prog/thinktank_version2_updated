@@ -78,6 +78,17 @@ export default function GlobeJourney() {
     if (!ctx) return;
 
     const rm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // The home page runs a first-visit intro (data-intro="run") and waits for something to finish it.
+    // If nothing has by now, finish it here so the header and hero copy are never left hidden.
+    const html = document.documentElement;
+    const introTimer = window.setTimeout(() => {
+      if (html.getAttribute("data-intro") === "run") {
+        try { sessionStorage.setItem("owii-intro", "1"); } catch { /* private mode */ }
+        html.setAttribute("data-intro", "skip");
+      }
+      html.classList.add("gj-safe"); // last-resort reveal, see globe.css
+    }, 4500);
     const debug = /[?&]gjdebug=1/.test(window.location.search);
     // Phones: fewer particles, lower pixel ratio, fewer arcs, so it stays smooth
     const lite = window.innerWidth < 700 || window.matchMedia("(pointer: coarse)").matches;
@@ -660,6 +671,7 @@ export default function GlobeJourney() {
     document.addEventListener("focusin", onOver);
     return () => {
       cancelAnimationFrame(raf);
+      clearTimeout(introTimer);
       clearTimeout(resizeTimer);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("pointermove", onMove);

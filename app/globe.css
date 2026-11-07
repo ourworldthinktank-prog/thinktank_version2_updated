@@ -88,3 +88,9 @@ html[data-gj="on"] #focus {
 @media (max-width: 420px) {
   .hwr { font-size: .92em; }
 }
+
+/* ---------- Safety net: never leave the hero hidden ---------- */
+/* Added by GlobeJourney a few seconds after load, only if the intro hasn't revealed things by itself. */
+html.gj-safe .hm-hero .hm-in { opacity: 1 !important; transform: none !important; visibility: visible !important; }
+html.gj-safe .hm-hero .kw > span { opacity: 1 !important; transform: none !important; }
+html.gj-safe .hm-hero .hwr { opacity: 1 !important; }
