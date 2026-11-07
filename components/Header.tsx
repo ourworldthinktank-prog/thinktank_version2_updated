@@ -10,7 +10,7 @@ const links = [
   { href: "/about", label: "About" },
   { href: "/india", label: "India Initiative" },
   { href: "/global", label: "Global Initiative", globe: false },
-  { href: "/council", label: "Council" },
+  { href: "/council", label: "Advisory Board" },
   { href: "/events", label: "Events" },
 ];
 

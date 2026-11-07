@@ -23,7 +23,7 @@ export default function Footer() {
               <li><a href="/">Home</a></li>
               <li><a href="/india">India Initiative</a></li>
               <li><a href="/global">Global Initiative</a></li>
-              <li><a href="/council">Council</a></li>
+              <li><a href="/council">Advisory Board</a></li>
               <li><a href="/events">Events</a></li>
               <li><a href={BHARAT_SUMMIT_URL} target="_blank" rel="noopener noreferrer">Bharat Summit</a></li>
             </ul>
