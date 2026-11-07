@@ -79,6 +79,8 @@ export default function GlobeJourney() {
 
     const rm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const debug = /[?&]gjdebug=1/.test(window.location.search);
+    // Phones: fewer particles, lower pixel ratio, fewer arcs, so it stays smooth
+    const lite = window.innerWidth < 700 || window.matchMedia("(pointer: coarse)").matches;
 
     // ---------- build particles ----------
     const pts: Particle[] = [];
@@ -89,6 +91,7 @@ export default function GlobeJourney() {
     for (let i = 0; i < LAND.length; i += 2) {
       const lon = LAND[i] / 10;
       const lat = LAND[i + 1] / 10;
+      if (lite && Math.random() < 0.35) continue;
       let c = regionColour(lon, lat);
       if (c !== 0 && Math.random() < 0.07) c = (Math.random() * 5) | 0; // a little texture
       push(lon, lat, c, 1, 0.8 + Math.random() * 0.5);
@@ -97,7 +100,10 @@ export default function GlobeJourney() {
       const lat = INDIA_PTS[i + 1] / 100;
       push(INDIA_PTS[i] / 100, lat, Math.random() < 0.7 ? 0 : 6, 1, 0.78 + Math.random() * 0.2, 1);
     }
-    for (let i = 0; i < SEA.length; i += 2) push(SEA[i] / 10, SEA[i + 1] / 10, 5, 0, 0.6);
+    for (let i = 0; i < SEA.length; i += 2) {
+      if (lite && Math.random() < 0.55) continue;
+      push(SEA[i] / 10, SEA[i + 1] / 10, 5, 0, 0.6);
+    }
     const N = pts.length;
 
     const rings = INDIA_RINGS.map((r) => {
@@ -132,7 +138,8 @@ export default function GlobeJourney() {
       return { path, t: Math.random(), speed: 0.0035 + Math.random() * 0.002, col: ARC_COLS[i % ARC_COLS.length] };
     });
 
-    const motes = Array.from({ length: 36 }, () => ({
+    const arcList = lite ? arcs.filter((_, i) => i % 2 === 0) : arcs;
+    const motes = Array.from({ length: lite ? 14 : 36 }, () => ({
       x: Math.random(), y: Math.random(), z: 0.3 + Math.random() * 0.7,
       r: 0.8 + Math.random() * 1.8, c: (Math.random() * 5) | 0, ph: Math.random() * 6.28,
     }));
@@ -152,26 +159,32 @@ export default function GlobeJourney() {
     const miniYaw = [faceYaw(78, 22), faceYaw(15, 20), faceYaw(-70, 0)];
     const miniHover = [0, 0, 0];
 
-    const els: { hero: HTMLElement | null; about: HTMLElement | null; focus: HTMLElement | null; worlds: HTMLElement[]; mode: "attr" | "cards" | "thirds" } =
-      { hero: null, about: null, focus: null, worlds: [], mode: "thirds" };
+    const els: { hero: HTMLElement | null; about: HTMLElement | null; focus: HTMLElement | null; worlds: HTMLElement[]; mode: "attr" | "cards" | "thirds"; cardLayout: "row" | "col" } =
+      { hero: null, about: null, focus: null, worlds: [], mode: "thirds", cardLayout: "row" };
 
-    // Looks for a row of three card-like boxes inside the pillars section
-    const findCards = (focus: HTMLElement): HTMLElement[] => {
+    // Looks for three card-like boxes inside the pillars section: side by side (row) or stacked (column)
+    const findCards = (focus: HTMLElement): { list: HTMLElement[]; layout: "row" | "col" } | null => {
       const fr = focus.getBoundingClientRect();
       const all = Array.from(focus.querySelectorAll<HTMLElement>("article, li, [class*='card' i], [class*='pillar' i]"));
       const c = all.filter((el) => {
         const r = el.getBoundingClientRect();
-        return r.width > 180 && r.width < fr.width * 0.62 && r.height > 140;
+        return r.width > 150 && r.width <= fr.width * 1.01 && r.height > 120;
       });
       const outer = c.filter((el) => !c.some((o) => o !== el && o.contains(el)));
-      const rows: HTMLElement[][] = [];
-      for (const el of outer) {
-        const top = el.getBoundingClientRect().top;
-        const row = rows.find((r) => Math.abs(r[0].getBoundingClientRect().top - top) < 60);
-        if (row) row.push(el); else rows.push([el]);
-      }
-      const row = rows.find((r) => r.length >= 3);
-      return row ? row.sort((a, b) => a.getBoundingClientRect().left - b.getBoundingClientRect().left).slice(0, 3) : [];
+      const group = (axis: "top" | "left") => {
+        const groups: HTMLElement[][] = [];
+        for (const el of outer) {
+          const v = el.getBoundingClientRect()[axis];
+          const g = groups.find((x) => Math.abs(x[0].getBoundingClientRect()[axis] - v) < 60);
+          if (g) g.push(el); else groups.push([el]);
+        }
+        return groups.find((x) => x.length >= 3);
+      };
+      const row = group("top");
+      if (row) return { list: row.sort((a, b) => a.getBoundingClientRect().left - b.getBoundingClientRect().left).slice(0, 3), layout: "row" };
+      const col = group("left");
+      if (col) return { list: col.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top).slice(0, 3), layout: "col" };
+      return null;
     };
 
     const refreshEls = () => {
@@ -180,13 +193,13 @@ export default function GlobeJourney() {
       els.focus = document.getElementById("focus") || document.querySelector<HTMLElement>('#pillars, [data-gs="pillars"], section.pillars');
       const attr = Array.from(document.querySelectorAll<HTMLElement>("[data-gs-world]"));
       if (attr.length >= 3) { els.worlds = attr.slice(0, 3); els.mode = "attr"; return; }
-      const cards = els.focus ? findCards(els.focus) : [];
-      if (cards.length >= 3) { els.worlds = cards; els.mode = "cards"; return; }
+      const found = els.focus ? findCards(els.focus) : null;
+      if (found) { els.worlds = found.list; els.mode = "cards"; els.cardLayout = found.layout; return; }
       els.worlds = []; els.mode = "thirds";
     };
 
     const layout = () => {
-      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      DPR = Math.min(window.devicePixelRatio || 1, lite ? 1.5 : 2);
       W = window.innerWidth;
       H = window.innerHeight;
       canvas.width = Math.round(W * DPR);
@@ -210,13 +223,15 @@ export default function GlobeJourney() {
       if (!Number.isNaN(lon) && !Number.isNaN(lat)) setGoal(lon, lat);
     };
     const onMove = (e: PointerEvent) => {
-      if (e.pointerType === "touch") return;
-      mouse.tx = e.clientX;
-      mouse.ty = e.clientY;
-      if (mouse.presence < 0.05) { mouse.x = e.clientX; mouse.y = e.clientY; }
-      mouse.active = true;
-      mouse.px = e.clientX / W - 0.5;
-      mouse.py = e.clientY / H - 0.5;
+      if (e.pointerType === "touch" && !drag) return;
+      if (e.pointerType !== "touch") {
+        mouse.tx = e.clientX;
+        mouse.ty = e.clientY;
+        if (mouse.presence < 0.05) { mouse.x = e.clientX; mouse.y = e.clientY; }
+        mouse.active = true;
+        mouse.px = e.clientX / W - 0.5;
+        mouse.py = e.clientY / H - 0.5;
+      }
       if (drag) {
         const dx = e.clientX - drag.x;
         const dy = e.clientY - drag.y;
@@ -230,7 +245,7 @@ export default function GlobeJourney() {
     let bigNow: Pose | null = null;
     let sNow = 0;
     const onDown = (e: PointerEvent) => {
-      if (e.pointerType !== "mouse" || e.button !== 0 || !bigNow || sNow > 0.3) return;
+      if (e.button !== 0 || !bigNow || sNow > 0.3) return;
       const t = e.target as Element | null;
       if (!t?.closest?.("[data-gs]") || t.closest("a,button,input,textarea,select")) return;
       if (Math.hypot(e.clientX - bigNow.cx, e.clientY - bigNow.cy) > bigNow.R * 1.15) return;
@@ -354,6 +369,7 @@ export default function GlobeJourney() {
       let big: Pose = { cx: W * 0.7, cy: H * 0.5, R: Math.min(W, H) * 0.3 };
       let heroW = 0;
       let bigAlpha = 1;
+      const narrow = W < 900;
       if (heroR && aboutR) {
         const hero = slotPose(heroR);
         const about = slotPose(aboutR);
@@ -361,7 +377,10 @@ export default function GlobeJourney() {
         const ys1 = Math.max(1, aboutDocCentre - H / 2);
         const from = H * 0.05;
         heroW = ease(clamp((sy - from) / Math.max(1, ys1 - from)));
-        const aboutCy = sy >= ys1 ? H / 2 : about.cy; // pinned once centred
+        const pinCy = narrow ? lerp(H / 2, H * 0.42, clamp((sy - ys1) / (H * 0.3))) : H / 2;
+        const aboutCy = sy >= ys1 ? pinCy : about.cy; // pinned once centred
+        // On phones the text sits below the globe, so once pinned it fades to a soft backdrop
+        if (narrow) bigAlpha = 1 - 0.72 * clamp((sy - ys1) / (H * 0.5));
         big = { cx: lerp(hero.cx, about.cx, heroW), cy: lerp(hero.cy, aboutCy, heroW), R: lerp(hero.R, about.R, heroW) };
         if (!focusR) {
           const secBottom = (els.about?.closest("section")?.getBoundingClientRect().bottom ?? aboutR.bottom) + sy;
@@ -387,8 +406,19 @@ export default function GlobeJourney() {
         } else if (els.mode === "cards" && els.worlds.length >= 3) {
           for (let i = 0; i < 3; i++) {
             const r = els.worlds[i].getBoundingClientRect();
-            const R = clamp(Math.min(r.width, r.height) * 0.3, 60, 120);
-            minis.push({ cx: r.left + r.width / 2, cy: r.top + R + 28, R, rect: r });
+            if (els.cardLayout === "col") {
+              // stacked cards (phones): a small world in the top-right corner of each card
+              const R = clamp(Math.min(r.width, r.height) * 0.16, 34, 54);
+              minis.push({ cx: r.right - R - 16, cy: r.top + R + 16, R, rect: r });
+            } else {
+              const R = clamp(Math.min(r.width, r.height) * 0.3, 44, 120);
+              minis.push({ cx: r.left + r.width / 2, cy: r.top + R + 28, R, rect: r });
+            }
+          }
+        } else if (narrow) {
+          const R = 44;
+          for (let i = 0; i < 3; i++) {
+            minis.push({ cx: focusR.right - R - 20, cy: focusR.top + (focusR.height * (i + 0.5)) / 3, R });
           }
         } else {
           const inner = els.focus?.querySelector<HTMLElement>(".wrap")?.getBoundingClientRect() ?? focusR;
@@ -402,7 +432,7 @@ export default function GlobeJourney() {
       bigNow = big;
 
       // While the globe pours into the pillars it draws above the page so it is never hidden by cards
-      const wantZ = s > 0.02 && !(s >= 1 && focusR && (focusR.bottom < 0 || focusR.top > H)) ? "2" : "0";
+      const wantZ = s > (narrow ? 0.6 : 0.02) && !(s >= 1 && focusR && (focusR.bottom < 0 || focusR.top > H)) ? "2" : "0";
       if (canvas.style.zIndex !== wantZ) canvas.style.zIndex = wantZ;
       // The pillars fade in as the globe splits (see globe.css)
       const root = document.documentElement;
@@ -539,7 +569,7 @@ export default function GlobeJourney() {
           const bp = { cx: bcx, cy: bcy, R: big.R };
           drawRings(bp, yaw, pitch, al, 1.4);
           ctx.lineCap = "round";
-          for (const arc of arcs) {
+          for (const arc of arcList) {
             if (!rm) arc.t = (arc.t + arc.speed * dt) % 1.35;
             const [r, g, b] = arc.col;
             const pr: number[][] = arc.path.map((v) => {
@@ -599,10 +629,12 @@ export default function GlobeJourney() {
           const c = CHIPS[i];
           if (!c || vis < 0.01 || s > 0) { el.style.opacity = "0"; el.style.pointerEvents = "none"; continue; }
           const ang = c.ang + (rm ? 0 : Math.sin(t * 0.5 + i * 2) * 0.28);
-          const rx = big.R * (W < 700 ? 1.02 : 1.2);
-          const ry = big.R * (W < 700 ? 0.98 : 0.88);
-          const x = big.cx + Math.cos(ang) * rx;
-          const y = big.cy + Math.sin(ang) * ry;
+          const rx = big.R * (W < 700 ? 0.92 : 1.2);
+          const ry = big.R * (W < 700 ? 1.02 : 0.88);
+          const hw = el.offsetWidth / 2 || 60;
+          const hh = el.offsetHeight / 2 || 20;
+          const x = clamp(big.cx + Math.cos(ang) * rx, hw + 8, W - hw - 8);
+          const y = clamp(big.cy + Math.sin(ang) * ry, hh + 70, H - hh - 12);
           const front = 0.5 + 0.5 * Math.sin(ang);
           el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) translate(-50%,-50%) scale(${(0.88 + 0.12 * front).toFixed(3)})`;
           el.style.opacity = (vis * (0.7 + 0.3 * front)).toFixed(3);

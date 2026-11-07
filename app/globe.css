@@ -70,3 +70,21 @@ html[data-gj="on"] #focus {
 
 /* ---------- Closing statement (same component as the About page) ---------- */
 .gj-close { position: relative; z-index: 1; padding: clamp(70px, 10vw, 140px) 0; }
+
+/* ---------- Mobile ---------- */
+[data-gs] { touch-action: pan-y; } /* vertical swipes still scroll; horizontal swipes spin the globe */
+
+@media (max-width: 700px) {
+  .gj-slot { width: min(100%, 420px, 60vh); }
+  .gj-chip { padding: 7px 12px 8px; border-radius: 13px; }
+  .gj-chip b { font-size: .8rem; gap: 6px; }
+  .gj-chip b::before { width: 6px; height: 6px; }
+  .gj-chip span { display: none; }
+  .gj-pills { gap: 8px; margin-bottom: 24px; }
+  .gj-pill { padding: 9px 14px; font-size: .8rem; }
+  .gj-about-txt { font-size: clamp(1.15rem, 5vw, 1.5rem) !important; }
+  .gj-close { padding: 56px 0; }
+}
+@media (max-width: 420px) {
+  .hwr { font-size: .92em; }
+}

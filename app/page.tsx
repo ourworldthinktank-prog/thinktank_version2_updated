@@ -113,11 +113,7 @@ export default async function Home() {
                 <div className="about-c-k" data-r><span className="bars"><i /><i /><i /></span>About us</div>
                 <WordReveal className="about-c-txt gj-about-txt" lines={["The Our-World Institute and Initiative brings progressives together to build alternatives and renew democracy. We work to empower citizens, restore public trust, and shape a fairer global order, through new ideas, practical programs, and stronger organizations."]} marks={{ democracy: "glow", alternatives: "glow" }} />
                 <ul className="gj-pills" data-r aria-label="Turn the globe">
-                  {ABOUT_PILLS.map((p) => (
-                    <li key={p.label}><button type="button" className="gj-pill" data-gj-focus={p.at}>{p.label}</button></li>
-                  ))}
                 </ul>
-                <a className="link about-c-link" href="/about" data-r>Read more <ArrowIcon size={16} /></a>
               </div>
               <div>
                 <div className="gj-about-globe" data-gs="about" aria-hidden="true" />
