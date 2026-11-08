@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import Shell from "@/components/Shell";
 import PageBanner from "@/components/PageBanner";
 import { PillarsStage, ClosingStage } from "./ScrollStages";
+import AimsAccordion from "@/components/AimsAccordion";
 
 export const metadata: Metadata = {
   title: "About",
@@ -10,11 +11,12 @@ export const metadata: Metadata = {
     "The Our-World Institute and Initiative enables progressives to work together to develop alternative solutions, empower citizens, revitalise democracy and build a fairer global order.",
 };
 
+// DRAFT COPY: the one-line descriptions are adapted from the intro paragraph; client to approve wording.
 const aims = [
-  { n: "01", t: "Develop alternative solutions", tag: "Imagine what comes next" },
-  { n: "02", t: "Empower citizens", tag: "Put people at the centre" },
-  { n: "03", t: "Revitalise democracy", tag: "Make democracy work" },
-  { n: "04", t: "Build a fairer global order", tag: "Shape a better world" },
+  { n: "01", t: "Develop alternative solutions", tag: "Imagine what comes next", d: "Bring progressives together to design practical alternatives to the challenges our world faces." },
+  { n: "02", t: "Empower citizens", tag: "Put people at the centre", d: "Give people the knowledge, voice and tools to shape the decisions that affect their lives." },
+  { n: "03", t: "Revitalise democracy", tag: "Make democracy work", d: "Strengthen democratic institutions and practice so they work for everyone and earn public trust." },
+  { n: "04", t: "Build a fairer global order", tag: "Shape a better world", d: "Shape cooperation between nations that is more equal, more sustainable and more peaceful." },
 ];
 
 // DRAFT COPY: the one-line descriptions are adapted from the intro paragraph; client to approve wording.
@@ -74,7 +76,7 @@ const css = `
 }
 
 .ab-wrap { width: min(1160px, calc(100% - 48px)); margin: 0 auto; }
-.ab-sec { padding: clamp(76px, 10vw, 132px) 0; }
+.ab-sec { padding: clamp(56px, 7vw, 96px) 0; }
 .ab-eyebrow {
   display: inline-flex; align-items: center; gap: 7px;
   margin-bottom: 22px; color: var(--ab-muted);
@@ -93,28 +95,63 @@ const css = `
 .ab-h2 .ab-accent { color: var(--ab-blue); }
 .ab-sub { max-width: 560px; margin: 22px 0 0; color: var(--ab-muted); font-size: 1.05rem; line-height: 1.7; }
 
-/* Intro */
-.ab-intro {
-  position: relative;
-  z-index: 1;
-  display: block;
-  max-width: 1000px;
-  margin: 0 auto;
+/* Intro: dark card, image placeholder beside the text */
+.ab-intro-sec { padding-top: clamp(32px, 5vw, 64px); padding-bottom: clamp(20px, 3vw, 40px); }
+.ab-intro-card {
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(26px, 4vw, 64px); align-items: stretch;
+  padding: clamp(18px, 2.6vw, 34px); border-radius: 28px; overflow: hidden;
+  background: linear-gradient(135deg, #14203f 0%, #1c2a5c 62%, #1a3a58 100%);
+  color: #fff; box-shadow: 0 40px 90px -40px rgba(20,32,63,.7);
 }
-
+.ab-intro-card::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background-image: radial-gradient(rgba(255,255,255,.12) .7px, transparent .7px); background-size: 18px 18px;
+  mask-image: linear-gradient(120deg, transparent 30%, black);
+}
+.ab-intro-glow {
+  position: absolute; width: 46%; aspect-ratio: 1; right: -12%; top: -22%; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(83,109,255,.5), transparent 68%); filter: blur(30px);
+  animation: ab-float 14s ease-in-out infinite;
+}
+.ab-img {
+  position: relative; min-height: 420px; border-radius: 18px; overflow: hidden;
+  display: grid; place-items: center; text-align: center;
+  background:
+    repeating-linear-gradient(135deg, rgba(255,255,255,.05) 0 14px, transparent 14px 28px),
+    linear-gradient(160deg, #2a3a82 0%, #3a4fb0 40%, #27a9a8 100%);
+  border: 1px dashed rgba(255,255,255,.35);
+  clip-path: inset(0 0 0 0 round 18px);
+}
+.ab-img::after {
+  content: ""; position: absolute; inset: -40%; pointer-events: none;
+  background: linear-gradient(110deg, transparent 40%, rgba(255,255,255,.16) 50%, transparent 60%);
+  animation: ab-sheen 6s ease-in-out infinite;
+}
+.ab-img-in { position: relative; z-index: 1; display: grid; gap: 10px; justify-items: center; color: rgba(255,255,255,.85); }
+.ab-img-in svg { width: 46px; height: 46px; }
+.ab-img-in b { font-size: .78rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 800; }
+.ab-img-in small { font-size: .72rem; opacity: .65; }
+.ab-img-badge {
+  position: absolute; z-index: 2; left: 16px; top: 16px; width: 56px; height: 56px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--ab-lime); color: var(--ab-ink); box-shadow: 0 10px 30px rgba(0,0,0,.3);
+}
+.ab-img-badge svg { width: 26px; height: 26px; animation: ab-spin 14s linear infinite; }
+.ab-intro-text { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; padding: clamp(6px, 1.6vw, 22px) clamp(0px, 1vw, 12px) clamp(6px, 1.6vw, 22px) 0; }
+.ab-intro-label { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px; font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.85); font-weight: 600; }
+.ab-intro-label i { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.5); position: relative; }
+.ab-intro-label i::after { content: ""; position: absolute; right: -2px; top: -2px; width: 6px; height: 6px; border-radius: 50%; background: var(--ab-lime); animation: ab-pulse 1.8s ease-out infinite; }
 .ab-lead {
-  max-width: 100%;
-  margin: 0;
-  color: var(--ab-ink);
-  font-size: clamp(1.2rem, 2.35vw, 1.8rem);
-  line-height: 1.7;
-  letter-spacing: -.025em;
-  font-weight: 500;
-  text-align: justify;
-  text-justify: inter-word;
+  margin: 0; color: #fff; text-transform: uppercase;
+  font-size: clamp(1.05rem, 1.95vw, 1.6rem); line-height: 1.32; letter-spacing: -.005em; font-weight: 500;
+  text-align: justify; text-justify: inter-word; hyphens: manual;
 }
-/* Aims: bold editorial rows */
+.ab-lead mark { background: none; color: var(--ab-lime); }
+.ab-lead-sub { margin: 26px 0 0; max-width: 520px; color: rgba(255,255,255,.78); font-size: .98rem; line-height: 1.7; text-align: justify; text-justify: inter-word; }
+.ab-lead-sub mark { background: none; color: var(--ab-aqua); font-weight: 600; }
+@keyframes ab-sheen { 0%, 100% { transform: translateX(-30%); } 50% { transform: translateX(30%); } }
 
+/* Aims: expanding panels (same colours as before) */
 .ab-aims {
   background: var(--ab-paper); position: relative;
   background-image: radial-gradient(rgba(83,109,255,.12) .7px, transparent .7px);
@@ -126,35 +163,60 @@ const css = `
   background: radial-gradient(circle, rgba(39,198,183,.12), transparent 68%);
   pointer-events: none;
 }
-
-.ab-aims-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 58px; }
+.ab-aims { padding-top: clamp(44px, 6vw, 80px); }
+.ab-aims-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 40px; }
 .ab-aims-head .ab-sub { max-width: 300px; margin: 0 0 5px; }
-.ab-aim-list { position: relative; z-index: 1; border-top: 1px solid #d8d9d3; }
-.ab-aim {
-  position: relative; display: grid; grid-template-columns: 72px 1fr auto;
-  gap: 22px; align-items: center; padding: 27px 10px;
-  border-bottom: 1px solid #d8d9d3; overflow: hidden;
-  transition: padding .45s cubic-bezier(.2,.75,.25,1), color .35s ease;
+.ab-ax { position: relative; z-index: 1; display: flex; height: clamp(400px, 46vw, 500px); border-radius: 20px; overflow: hidden; box-shadow: 0 30px 70px -40px rgba(20,32,63,.45); border: 1px solid #d8d9d3; background: #fff; }
+.ab-ax-p {
+  position: relative; flex: 0 0 clamp(84px, 9vw, 124px); min-width: 0; overflow: hidden; text-align: left; cursor: pointer;
+  display: flex; flex-direction: column; justify-content: space-between; padding: 24px clamp(14px, 1.6vw, 26px);
+  background: #fff; color: var(--ab-ink); border-right: 1px solid #e4e5df;
+  transition: flex-basis .7s cubic-bezier(.2,.75,.25,1), background .5s ease, color .4s ease;
 }
-.ab-aim::before {
-  content: ""; position: absolute; z-index: 0; inset: 0;
-  background: linear-gradient(105deg, #17234a 0%, #263a78 68%, #244e62 100%); transform: translateY(101%);
-  transition: transform .5s cubic-bezier(.2,.75,.25,1);
+.ab-ax-p:last-child { border-right: 0; }
+.ab-ax-p::before { content: ""; position: absolute; z-index: 0; inset: 0; background: linear-gradient(105deg, #17234a 0%, #263a78 68%, #244e62 100%); opacity: 0; transition: opacity .5s ease; }
+.ab-ax-p:hover:not(.on)::before { opacity: .06; }
+.ab-ax-p > * { position: relative; z-index: 1; }
+.ab-ax-p.on { flex: 1 1 auto; color: #fff; cursor: default; }
+.ab-ax-p.on::before { opacity: 1; }
+.ab-ax-top { display: flex; align-items: center; gap: 10px; font-size: .8rem; letter-spacing: .08em; font-weight: 800; color: var(--ab-blue); }
+.ab-ax-top i { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid var(--ab-blue); position: relative; flex: none; }
+.ab-ax-top i::after { content: ""; position: absolute; inset: 2.5px; border-radius: 50%; background: var(--ab-blue); transition: background .4s; }
+.ab-ax-p.on .ab-ax-top { color: var(--ab-lime); }
+.ab-ax-p.on .ab-ax-top i { border-color: var(--ab-lime); }
+.ab-ax-p.on .ab-ax-top i::after { background: var(--ab-lime); animation: ab-pulse 1.8s ease-out infinite; }
+.ab-ax-vt { position: absolute; z-index: 1; left: clamp(14px, 1.6vw, 26px); bottom: 24px; writing-mode: vertical-rl; transform: rotate(180deg); font-size: clamp(1rem, 1.5vw, 1.35rem); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; max-height: calc(100% - 90px); transition: opacity .3s ease; }
+.ab-ax-p.on .ab-ax-vt { opacity: 0; pointer-events: none; }
+.ab-ax-body { display: flex; flex-direction: column; gap: 16px; min-width: min(480px, 70vw); opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility 0s .3s; }
+.ab-ax-p.on .ab-ax-body { opacity: 1; visibility: visible; transition: opacity .3s ease; }
+.ab-ax-p.on .ab-ax-body > * { animation: ab-reveal .7s cubic-bezier(.2,.7,.2,1) both; }
+.ab-ax-p.on .ab-ax-body > *:nth-child(1) { animation-delay: .18s; }
+.ab-ax-p.on .ab-ax-body > *:nth-child(2) { animation-delay: .28s; }
+.ab-ax-p.on .ab-ax-body > *:nth-child(3) { animation-delay: .38s; }
+.ab-ax-tag { align-self: flex-start; padding: 6px 12px; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ab-lime); font-weight: 700; }
+.ab-ax-body h3 { margin: 0; font-size: clamp(1.9rem, 4.4vw, 3.8rem); line-height: 1.02; letter-spacing: -.045em; font-weight: 850; color: #fff; }
+.ab-ax-body p { margin: 0; max-width: 460px; color: rgba(255,255,255,.78); font-size: 1rem; line-height: 1.65; }
+.ab-ax-bar { position: absolute; z-index: 2; left: 0; right: 0; top: 0; height: 3px; background: linear-gradient(90deg, var(--ab-blue), var(--ab-aqua), var(--ab-lime)); transform-origin: left; transform: scaleX(0); }
+.ab-ax-p.on.ab-autoplay .ab-ax-bar { animation: ab-axbar var(--ab-ax-t, 5s) linear forwards; }
+@keyframes ab-axbar { to { transform: scaleX(1); } }
+@media (max-width: 850px) {
+  .ab-intro-card { grid-template-columns: 1fr; }
+  .ab-img { min-height: 280px; aspect-ratio: 4 / 3; }
+  .ab-intro-text { padding: 6px 4px 14px; }
+  .ab-lead-sub { max-width: none; }
 }
-.ab-aim:hover { padding-left: 24px; padding-right: 24px; color: #fff; }
-.ab-aim:hover::before { transform: translateY(0); }
-.ab-aim > * { position: relative; z-index: 1; }
-.ab-aim-num { color: var(--ab-blue); font-size: .85rem; font-weight: 850; letter-spacing: .08em; }
-.ab-aim h3 {
-  margin: 0; font-size: clamp(1.45rem, 3.5vw, 2.8rem);
-  line-height: 1.1; letter-spacing: -.045em; font-weight: 800;
-  transition: transform .45s cubic-bezier(.2,.75,.25,1);
+@media (max-width: 700px) {
+  .ab-axw { height: calc(100svh + (var(--n) - 1) * 58svh); }
+  .ab-axw .ab-ax { position: sticky; top: 88px; }
+  .ab-ax { flex-direction: column; height: auto; }
+  .ab-ax-p { flex: 0 0 auto; height: 74px; padding: 0 18px; flex-direction: row; align-items: center; justify-content: flex-start; gap: 16px; border-right: 0; border-bottom: 1px solid #e4e5df; transition: height .6s cubic-bezier(.2,.75,.25,1), background .5s ease, color .4s ease; }
+  .ab-ax-p:last-child { border-bottom: 0; }
+  .ab-ax-p.on { flex: 0 0 auto; height: 330px; flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 24px 18px; gap: 18px; }
+  .ab-ax-vt { position: static; writing-mode: horizontal-tb; transform: none; max-height: none; font-size: 1.05rem; }
+  .ab-ax-p.on .ab-ax-vt { display: none; }
+  .ab-ax-body { min-width: 0; }
 }
-.ab-aim:hover h3 { transform: translateX(5px); }
-.ab-aim-tag { color: var(--ab-muted); font-size: .78rem; transition: color .35s ease; }
-.ab-aim:hover .ab-aim-tag { color: rgba(255,255,255,.65); }
-.ab-aim-arrow { display: inline-block; margin-left: 12px; color: var(--ab-blue); transition: transform .35s ease; }
-.ab-aim:hover .ab-aim-arrow { transform: translate(5px, -5px); }
+@media (prefers-reduced-motion: reduce) { .ab-intro-glow, .ab-img::after, .ab-img-badge svg { animation: none !important; } }
 
 /* ============ Pillars: pinned scroll stage ============ */
 .ab-pillars-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 62px; }
@@ -190,7 +252,7 @@ const css = `
 }
 @media (max-width: 600px) {
   .ab-wrap { width: min(100% - 36px, 1160px); }
-  .ab-sec { padding: 68px 0; }
+  .ab-sec { padding: 48px 0; }
   .ab-aims-head, .ab-pillars-head { margin-bottom: 36px; }
   .ab-aim { grid-template-columns: 38px 1fr; gap: 12px; padding: 23px 2px; }
   .ab-aim-tag { grid-column: 2; margin-top: -4px; }
@@ -209,34 +271,37 @@ export default function AboutPage() {
       <div className="ab">
         <PageBanner variant="about" />
 
-        {/* Intro */}
+        {/* Intro: dark card with an image placeholder beside the text */}
         <section className="ab-sec ab-intro-sec">
-          <div className="ab-wrap ab-intro">
-            <div className="ab-rv">
-              <div className="ab-eyebrow">
-                <i />
-                <i />
-                <i />
+          <div className="ab-wrap">
+            <div className="ab-intro-card ab-rv">
+              <span className="ab-intro-glow" aria-hidden="true" />
+              <div className="ab-img" role="img" aria-label="Image placeholder">
+                <span className="ab-img-badge" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.6 2.6 4 5.7 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.7-4-9s1.4-6.4 4-9z" /></svg>
+                </span>
+                <div className="ab-img-in">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3" /><circle cx="9" cy="10" r="1.8" /><path d="M21 16l-5-5-8 8" /></svg>
+                  <b>Image placeholder</b>
+                  <small>Add the client photo here</small>
+                </div>
               </div>
 
-              <span className="ab-kicker">
-                A shared vision for our world
-              </span>
-
-              <p className="ab-lead">
-                The Our-World Institute and Initiative aims to enable
-                progressives to work <mark>collectively</mark> across
-                normative, programmatic, and organisational dimensions
-                to develop alternative solutions, empower citizens,
-                revitalise democracy, and build a{" "}
-                <mark>fairer global order.</mark> This requires rethinking
-                established paradigms, reimagining institutions,
-                modernising operational approaches, restoring public
-                trust through a compelling vision for a shared future,
-                harnessing disruptive innovations for the common good,
-                and reclaiming the centre through new coalitions and
-                partnerships.
-              </p>
+              <div className="ab-intro-text">
+                <span className="ab-intro-label"><i />A shared vision for our world</span>
+                <p className="ab-lead">
+                  The Our-World Institute and Initiative aims to enable progressives to work{" "}
+                  <mark>collectively</mark> across normative, programmatic, and organisational
+                  dimensions to develop alternative solutions, empower citizens, revitalise
+                  democracy, and build a <mark>fairer global order.</mark>
+                </p>
+                <p className="ab-lead-sub">
+                  This requires rethinking established paradigms, reimagining institutions,
+                  modernising operational approaches, restoring public trust through a compelling
+                  vision for a shared future, harnessing disruptive innovations for the common
+                  good, and reclaiming the centre through <mark>new coalitions and partnerships.</mark>
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -256,14 +321,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="ab-aim-list">
-              {aims.map((a, i) => (
-                <article className="ab-aim ab-rv" style={stagger(i)} key={a.n}>
-                  <span className="ab-aim-num">{a.n} /</span>
-                  <h3>{a.t}</h3>
-                </article>
-              ))}
-            </div>
+            <AimsAccordion aims={aims} />
           </div>
         </section>
 
@@ -285,12 +343,7 @@ export default function AboutPage() {
 
         <PillarsStage pillars={pillars} />
 
-        {/* Closing statement */}
-        <section className="ab-sec">
-          <div className="ab-wrap">
-            <ClosingStage words={closingWords} marquee={marqueeText} />
-          </div>
-        </section>
+        
       </div>
     </Shell>
   );

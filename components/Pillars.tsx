@@ -1,7 +1,8 @@
 import { ArrowIcon } from "./Icons";
 
 // The three pillars. Icons are drawn with stroke animation (see home.css, .pl-*).
-interface Pillar { n: string; title: string; text: string; href: string; external?: boolean; icon: "summit" | "research" | "network" }
+// Each card is an image card: set `image` to a file in /public to replace the animated placeholder.
+interface Pillar { n: string; title: string; text: string; href: string; external?: boolean; icon: "summit" | "research" | "network"; image?: string }
 
 function Icon({ k }: { k: Pillar["icon"] }) {
   if (k === "summit")
@@ -40,6 +41,7 @@ function Icon({ k }: { k: Pillar["icon"] }) {
 
 export default function Pillars({ summitHref }: { summitHref: string }) {
   const items: Pillar[] = [
+    // image: "/images/pillars/summit.jpg",   <- add a photo path here to replace the placeholder
     { n: "01", title: "Annual Summit", text: "A global gathering of progressives to plan and work together.", href: summitHref, external: true, icon: "summit" },
     { n: "02", title: "Research and Policy", text: "Evidence, papers and policy briefs that make the case for change.", href: "#platforms", icon: "research" },
     { n: "03", title: "Global Network", text: "People, ideas and partnerships that connect nations.", href: "#platforms", icon: "network" },
@@ -56,12 +58,14 @@ export default function Pillars({ summitHref }: { summitHref: string }) {
         </div>
         <div className="pl-grid">
           {items.map((p, i) => (
-            <a key={p.n} className={`pl-card pl-${p.icon}`} href={p.href} data-r data-spot data-tilt style={{ ["--rd" as string]: `${i * 140}ms` }}
+            <a key={p.n} className={`pl-card pl-${p.icon}`} href={p.href} data-r data-spot data-tilt
+              style={{ ["--rd" as string]: `${i * 140}ms`, ...(p.image ? { ["--pl-img" as string]: `url("${p.image}")` } : {}) }}
               {...(p.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
               <span className="pl-num" aria-hidden="true">{p.n}</span>
               <Icon k={p.icon} />
               <h3>{p.title}</h3>
               <p>{p.text}</p>
+              <span className="pl-go">{p.external ? "Visit site" : "Learn more"} <ArrowIcon size={16} /></span>
             </a>
           ))}
         </div>

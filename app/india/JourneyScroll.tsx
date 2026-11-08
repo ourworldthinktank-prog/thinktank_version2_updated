@@ -2,7 +2,27 @@
 
 import { useEffect, useRef, type CSSProperties } from "react";
 
-export type JourneyStep = { n: string; t: string; d: string; c: string };
+export type JourneyStep = {
+  n: string;
+  t: string;
+  /** Short paragraph under the title */
+  d?: string;
+  c?: string;
+  /** Small word shown in the pill, e.g. "Ideas" */
+  k?: string;
+  /** Optional numbered activities listed on the card */
+  items?: string[];
+};
+
+/** One card's colours. bg can be any CSS background (a gradient works); fg is the text colour. */
+export type CardColour = { bg: string; fg?: string; arrow?: string };
+
+const isDark = (hex?: string) => {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex ?? "");
+  if (!m) return false;
+  const n = parseInt(m[1], 16);
+  return 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) < 140;
+};
 
 const clamp = (v: number, min = 0, max = 1) => Math.min(max, Math.max(min, v));
 const ease = (t: number) => t * t * (3 - 2 * t);
@@ -84,8 +104,8 @@ const css = `
   box-shadow: 0 30px 60px -28px rgba(0,0,0,.7);
 }
 .jr-card[data-v="1"] .jr-inner { --bg: linear-gradient(135deg, #27C6B7, #1a9e92); --fg: #08122e; }
-.jr-card[data-v="2"] .jr-inner { --bg: linear-gradient(135deg, #8B5CFF, #6a3fe0); --fg: #fff; }
-.jr-card[data-v="3"] .jr-inner { --bg: linear-gradient(135deg, #C9E879, #a8d14a); --fg: #0b1030; }
+.jr-card[data-v="2"] .jr-inner { --bg: linear-gradient(135deg, #536DFF, #3a4fd6); --fg: #fff; }
+.jr-card[data-v="3"] .jr-inner { --bg: linear-gradient(135deg, #27C6B7, #1a9e92); --fg: #0b1030; }
 .jr-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .jr-pill {
   display: inline-block; padding: 7px 14px; border-radius: 999px; border: 1px solid currentColor;
@@ -95,8 +115,8 @@ const css = `
   display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
   background: currentColor; font-size: 1.1rem; line-height: 1;
 }
-.jr-go b { color: #0b1030; font-weight: 800; }
-.jr-card[data-v="1"] .jr-go b, .jr-card[data-v="3"] .jr-go b { color: #fff; }
+.jr-go b { color: var(--arrow, #0b1030); font-weight: 800; }
+.jr-card[data-v="1"] .jr-inner, .jr-card[data-v="3"] .jr-inner { --arrow: #fff; }
 .jr-inner h3 {
   position: relative; z-index: 1; margin: auto 0 0; max-width: 14ch; color: inherit;
   font-size: clamp(1.8rem, 3.6vw, 3rem); line-height: 1.02; letter-spacing: -.045em; font-weight: 850;
@@ -105,6 +125,17 @@ const css = `
   position: relative; z-index: 1; margin: 0; max-width: 46ch; color: inherit; opacity: .9;
   font-size: clamp(.95rem, 1.35vw, 1.1rem); line-height: 1.6;
 }
+.jr-items {
+  position: relative; z-index: 1; list-style: none; margin: 0; padding: 0; display: grid; gap: 10px;
+}
+.jr-items li {
+  display: grid; grid-template-columns: 34px 1fr; gap: 8px; padding-top: 10px;
+  border-top: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  font-size: clamp(.86rem, 1.2vw, 1rem); line-height: 1.45;
+}
+.jr-items i { font-style: normal; font-size: .72rem; font-weight: 800; letter-spacing: .12em; opacity: .7; padding-top: .2em; }
+.jr-card.has-items .jr-inner { min-height: clamp(380px, 60vh, 520px); }
+.jr-card.has-items .jr-inner h3 { margin: 6px 0 0; max-width: 22ch; font-size: clamp(1.5rem, 2.8vw, 2.3rem); }
 .jr-wm {
   position: absolute; right: 14px; bottom: -.12em; z-index: 0; pointer-events: none;
   font-size: clamp(8rem, 18vw, 13rem); font-weight: 900; line-height: .8; letter-spacing: -.07em;
@@ -116,8 +147,8 @@ const css = `
 .jr-hint { display: none; }
 
 /* Enhanced: pinned stage, cards fly in from the right and pile up to the left */
-.jr[data-ready="true"] { height: calc(var(--jr-h) + 480vh); }
-@supports (height: 100svh) { .jr[data-ready="true"] { height: calc(var(--jr-h) + 480svh); } }
+.jr[data-ready="true"] { height: calc(var(--jr-h) + var(--jr-n, 4) * 120vh); }
+@supports (height: 100svh) { .jr[data-ready="true"] { height: calc(var(--jr-h) + var(--jr-n, 4) * 120svh); } }
 .jr[data-ready="true"] .jr-stage {
   position: sticky; top: var(--jr-top); height: var(--jr-h); padding: 0;
   --fly: 100vw; --dx: 78px; --dy: -9px; --dr: 2.2deg; --rot: 10deg; --cw: min(620px, calc(100% - 40px));
@@ -187,12 +218,25 @@ const css = `
   .jr-stage { border-radius: 22px; }
   .jr[data-ready="true"] .jr-stage { --dx: 16px; --dy: -6px; --cw: calc(100% - 32px); }
   .jr-inner { min-height: clamp(300px, 56vh, 420px); border-radius: 22px; }
+  .jr-card.has-items .jr-inner { min-height: clamp(420px, 70vh, 580px); }
   .jr[data-ready="true"] .jr-hint { display: none; }
   .jr[data-ready="true"] .jr-track { bottom: 16px; }
 }
 `;
 
-export default function JourneyScroll({ steps }: { steps: JourneyStep[] }) {
+export default function JourneyScroll({
+  steps,
+  label = "Step",
+  ariaLabel = "Scroll through the steps",
+  palette,
+}: {
+  steps: JourneyStep[];
+  /** Word before the number in each pill, e.g. "Step" or "Stream" */
+  label?: string;
+  ariaLabel?: string;
+  /** Optional colours for the cards, in order. Repeats if there are more cards than colours. */
+  palette?: CardColour[];
+}) {
   const rootRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLLIElement | null)[]>([]);
@@ -280,7 +324,7 @@ export default function JourneyScroll({ steps }: { steps: JourneyStep[] }) {
   const total = String(steps.length).padStart(2, "0");
 
   return (
-    <section className="jr" ref={rootRef} aria-label="Four ways we work in India">
+    <section className="jr" ref={rootRef} aria-label={ariaLabel} style={{ "--jr-n": steps.length } as CSSProperties}>
       <style>{css}</style>
       <div className="jr-stage" ref={stageRef}>
         <div className="jr-bg" aria-hidden="true" />
@@ -300,15 +344,33 @@ export default function JourneyScroll({ steps }: { steps: JourneyStep[] }) {
 
         <ol className="jr-cards">
           {steps.map((s, i) => (
-            <li className="jr-card" data-v={i % 4} key={s.n} ref={(el) => { cardRefs.current[i] = el; }}>
+            <li className={`jr-card${s.items?.length ? " has-items" : ""}`} data-v={i % 4} key={s.n} ref={(el: HTMLLIElement | null) => { cardRefs.current[i] = el; }}>
               <span className="jr-ring" aria-hidden="true" />
-              <article className="jr-inner">
+              <article
+                className="jr-inner"
+                style={
+                  palette?.length
+                    ? (() => {
+                        const c = palette[i % palette.length];
+                        const fg = c.fg ?? "#fff";
+                        return { "--bg": c.bg, "--fg": fg, "--arrow": c.arrow ?? (isDark(fg) ? "#0b1030" : "#fff") } as CSSProperties;
+                      })()
+                    : undefined
+                }
+              >
                 <div className="jr-top">
-                  <span className="jr-pill">Step {s.n} / {total}</span>
+                  <span className="jr-pill">{label} {s.n} / {total}{s.k ? ` · ${s.k}` : ""}</span>
                   <span className="jr-go" aria-hidden="true"><b>↗</b></span>
                 </div>
                 <h3>{s.t}</h3>
-                <p>{s.d}</p>
+                {s.d && <p>{s.d}</p>}
+                {!!s.items?.length && (
+                  <ul className="jr-items">
+                    {s.items.map((it, k) => (
+                      <li key={k}><i>{String(k + 1).padStart(2, "0")}</i><span>{it}</span></li>
+                    ))}
+                  </ul>
+                )}
                 <span className="jr-wm" aria-hidden="true">{s.n}</span>
                 <span className="jr-veil" aria-hidden="true" />
               </article>
@@ -331,7 +393,7 @@ export default function JourneyScroll({ steps }: { steps: JourneyStep[] }) {
           <span className="jr-run" />
           <ol>
             {steps.map((s, i) => (
-              <li className="jr-stop" key={s.n} ref={(el) => { stopRefs.current[i] = el; }}>
+              <li className="jr-stop" key={s.n} ref={(el: HTMLLIElement | null) => { stopRefs.current[i] = el; }}>
                 <span>{s.n}</span>
               </li>
             ))}

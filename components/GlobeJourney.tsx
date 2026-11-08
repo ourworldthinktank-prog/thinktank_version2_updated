@@ -24,8 +24,8 @@ const hexRgb = (h: string): [number, number, number] => {
   return [n >> 16, (n >> 8) & 255, n & 255];
 };
 
-// Palette: lime (India + accents), aqua, blue, violet, sky, deep teal, pale lime. No orange.
-const COLS = ["#C9E879", "#27C6B7", "#536DFF", "#8B5CFF", "#6FA8FF", "#1C6E8C", "#E7F6BD"].map(hexRgb);
+// Palette from the Bharat Summit globe artwork: amber, orange, red, cyan, teal, deep teal, navy.
+const COLS = ["#F5A12A", "#F26B3A", "#E8341C", "#1FB8CF", "#1E9C8C", "#1C6E8C", "#1C2D5E"].map(hexRgb);
 const NC = COLS.length;
 const NA = 8;
 
@@ -49,13 +49,13 @@ function inPoly(x: number, y: number, poly: [number, number][]) {
   return c;
 }
 function regionColour(lon: number, lat: number) {
-  if (inPoly(lon, lat, INDIA_POLY)) return 0; // India: lime
-  if (lon < -30) return lat > 12 ? 2 : 3; // Americas: blue / violet
-  if (lon < 52 && lat < 36) return 1; // Africa and Arabia: aqua
-  if (lon < 60) return 4; // Europe: sky
-  if (lat < -8) return 3; // Oceania: violet
-  if (lat > 50) return 4;
-  return lon > 120 ? 2 : 1; // East and South-East Asia
+  if (inPoly(lon, lat, INDIA_POLY)) return lat < 21 ? 1 : 0; // India: amber / orange
+  if (lon < -30) return lat > 15 ? (lat > 50 ? 0 : 1) : lat > -20 ? 4 : 3; // Americas
+  if (lon < 52 && lat < 36) return lat < -10 ? 2 : lat < 10 ? 5 : 3; // Africa and Arabia
+  if (lon < 60) return lat > 55 ? 6 : 3; // Europe
+  if (lat < -8) return lon > 160 ? 1 : 2; // Oceania
+  if (lat > 50) return 6; // Siberia
+  return lon > 120 ? 5 : 4; // East and South-East Asia
 }
 // yaw / pitch that bring (lon, lat) to the centre of the visible disc
 function faceYaw(lon: number, lat: number) {
@@ -92,6 +92,8 @@ export default function GlobeJourney() {
     const debug = /[?&]gjdebug=1/.test(window.location.search);
     // Phones: fewer particles, lower pixel ratio, fewer arcs, so it stays smooth
     const lite = window.innerWidth < 700 || window.matchMedia("(pointer: coarse)").matches;
+    // Dot size. Raise for bigger dots, lower for finer ones (phones draw fewer dots, so they get a little more).
+    const DOT = lite ? 2.1 : 1.85;
 
     // ---------- build particles ----------
     const pts: Particle[] = [];
@@ -104,12 +106,12 @@ export default function GlobeJourney() {
       const lat = LAND[i + 1] / 10;
       if (lite && Math.random() < 0.35) continue;
       let c = regionColour(lon, lat);
-      if (c !== 0 && Math.random() < 0.07) c = (Math.random() * 5) | 0; // a little texture
+      if (!inPoly(lon, lat, INDIA_POLY) && Math.random() < 0.07) c = (Math.random() * COLS.length) | 0; // a little texture
       push(lon, lat, c, 1, 0.8 + Math.random() * 0.5);
     }
     for (let i = 0; i < INDIA_PTS.length; i += 2) {
       const lat = INDIA_PTS[i + 1] / 100;
-      push(INDIA_PTS[i] / 100, lat, Math.random() < 0.7 ? 0 : 6, 1, 0.78 + Math.random() * 0.2, 1);
+      push(INDIA_PTS[i] / 100, lat, lat < 21 ? 1 : 0, 1, 0.78 + Math.random() * 0.2, 1);
     }
     for (let i = 0; i < SEA.length; i += 2) {
       if (lite && Math.random() < 0.55) continue;
@@ -126,7 +128,7 @@ export default function GlobeJourney() {
     // arcs from India to the world
     const HOME: [number, number] = [77.2, 28.6];
     const CITIES: [number, number][] = [[-0.1, 51.5], [-74, 40.7], [-46.6, -23.5], [28, -26.2], [139.7, 35.7], [151.2, -33.9], [36.8, -1.3], [13.4, 52.5], [103.8, 1.35], [-99.1, 19.4]];
-    const ARC_COLS = [COLS[1], COLS[6], COLS[4], COLS[0], COLS[2]];
+    const ARC_COLS = [1, 3, 0, 4, 2, 5].map((i) => COLS[i]);
     const slerp = (a: number[], b: number[], t: number) => {
       const dot = clamp(a[0] * b[0] + a[1] * b[1] + a[2] * b[2], -1, 1);
       const om = Math.acos(dot);
@@ -149,6 +151,14 @@ export default function GlobeJourney() {
       return { path, t: Math.random(), speed: 0.0035 + Math.random() * 0.002, col: ARC_COLS[i % ARC_COLS.length] };
     });
 
+    // Constellation of nodes and thin lines around the globe, like the design direction
+    const nodes = Array.from({ length: lite ? 12 : 24 }, () => ({
+      a: Math.random() * Math.PI * 2,
+      r: 1.1 + Math.random() * 0.5,
+      sp: (Math.random() < 0.5 ? -1 : 1) * (0.015 + Math.random() * 0.03),
+      s: 1.6 + Math.random() * 1.8,
+      c: [1, 3, 0, 4][(Math.random() * 4) | 0],
+    }));
     const arcList = lite ? arcs.filter((_, i) => i % 2 === 0) : arcs;
     const motes = Array.from({ length: lite ? 14 : 36 }, () => ({
       x: Math.random(), y: Math.random(), z: 0.3 + Math.random() * 0.7,
@@ -170,8 +180,8 @@ export default function GlobeJourney() {
     const miniYaw = [faceYaw(78, 22), faceYaw(15, 20), faceYaw(-70, 0)];
     const miniHover = [0, 0, 0];
 
-    const els: { hero: HTMLElement | null; about: HTMLElement | null; focus: HTMLElement | null; worlds: HTMLElement[]; mode: "attr" | "cards" | "thirds"; cardLayout: "row" | "col" } =
-      { hero: null, about: null, focus: null, worlds: [], mode: "thirds", cardLayout: "row" };
+    const els: { hero: HTMLElement | null; about: HTMLElement | null; focus: HTMLElement | null; worlds: HTMLElement[]; mode: "attr" | "cards" | "thirds"; cardLayout: "row" | "col"; cards: HTMLElement[] } =
+      { hero: null, about: null, focus: null, worlds: [], mode: "thirds", cardLayout: "row", cards: [] };
 
     // Looks for three card-like boxes inside the pillars section: side by side (row) or stacked (column)
     const findCards = (focus: HTMLElement): { list: HTMLElement[]; layout: "row" | "col" } | null => {
@@ -201,6 +211,7 @@ export default function GlobeJourney() {
     const refreshEls = () => {
       els.hero = document.querySelector<HTMLElement>('[data-gs="hero"]');
       els.about = document.querySelector<HTMLElement>('[data-gs="about"]');
+      els.cards = Array.from(document.querySelectorAll<HTMLElement>(".pl-card"));
       els.focus = document.getElementById("focus") || document.querySelector<HTMLElement>('#pillars, [data-gs="pillars"], section.pillars');
       const attr = Array.from(document.querySelectorAll<HTMLElement>("[data-gs-world]"));
       if (attr.length >= 3) { els.worlds = attr.slice(0, 3); els.mode = "attr"; return; }
@@ -290,9 +301,9 @@ export default function GlobeJourney() {
     const drawHalo = (p: Pose, alpha: number) => {
       if (alpha < 0.01) return;
       const g = ctx.createRadialGradient(p.cx, p.cy, p.R * 0.8, p.cx, p.cy, p.R * 1.4);
-      g.addColorStop(0, `rgba(39,198,183,${(0.1 * alpha).toFixed(3)})`);
-      g.addColorStop(0.55, `rgba(83,109,255,${(0.08 * alpha).toFixed(3)})`);
-      g.addColorStop(1, "rgba(83,109,255,0)");
+      g.addColorStop(0, `rgba(31,184,207,${(0.06 * alpha).toFixed(3)})`);
+      g.addColorStop(0.5, `rgba(245,161,42,${(0.06 * alpha).toFixed(3)})`);
+      g.addColorStop(1, "rgba(245,161,42,0)");
       ctx.fillStyle = g;
       ctx.beginPath();
       ctx.arc(p.cx, p.cy, p.R * 1.4, 0, Math.PI * 2);
@@ -304,7 +315,7 @@ export default function GlobeJourney() {
       ctx.lineJoin = "round";
       for (const pass of [[w * 3.2, 0.14], [w, 0.95]]) {
         ctx.lineWidth = pass[0];
-        ctx.strokeStyle = `rgba(201,232,121,${(pass[1] * alpha).toFixed(3)})`;
+        ctx.strokeStyle = `rgba(226,74,30,${(pass[1] * alpha).toFixed(3)})`;
         for (const ring of rings) {
           let open = false;
           ctx.beginPath();
@@ -320,6 +331,30 @@ export default function GlobeJourney() {
         }
       }
     };
+    const drawNetwork = (p: Pose, t: number, alpha: number) => {
+      if (alpha < 0.02) return;
+      const pos = nodes.map((n) => {
+        const ang = n.a + (rm ? 0 : t * n.sp);
+        return [p.cx + Math.cos(ang) * n.r * p.R, p.cy + Math.sin(ang) * n.r * p.R * 0.92];
+      });
+      const reach = p.R * 0.62;
+      ctx.lineWidth = 1;
+      for (let i = 0; i < pos.length; i++) {
+        for (let j = i + 1; j < pos.length; j++) {
+          const d = Math.hypot(pos[i][0] - pos[j][0], pos[i][1] - pos[j][1]);
+          if (d < reach) {
+            ctx.strokeStyle = `rgba(15,27,77,${(0.17 * (1 - d / reach) * alpha).toFixed(3)})`;
+            ctx.beginPath(); ctx.moveTo(pos[i][0], pos[i][1]); ctx.lineTo(pos[j][0], pos[j][1]); ctx.stroke();
+          }
+        }
+      }
+      const k = clamp(p.R / 340, 0.6, 1.1);
+      nodes.forEach((n, i) => {
+        const [r, g, b] = COLS[n.c];
+        ctx.fillStyle = `rgba(${r},${g},${b},${(0.85 * alpha).toFixed(3)})`;
+        ctx.beginPath(); ctx.arc(pos[i][0], pos[i][1], n.s * k, 0, Math.PI * 2); ctx.fill();
+      });
+    };
     const drawBeacon = (p: Pose, ya: number, pi: number, alpha: number, t: number) => {
       if (alpha < 0.02) return;
       const v = toVec(HOME[0], HOME[1]);
@@ -329,10 +364,10 @@ export default function GlobeJourney() {
       const hy = p.cy - out[1] * p.R;
       const ph = rm ? 0.4 : (t * 0.6) % 1;
       const k = clamp(p.R / 340, 0.5, 1);
-      ctx.strokeStyle = `rgba(201,232,121,${(0.6 * (1 - ph) * alpha).toFixed(3)})`;
+      ctx.strokeStyle = `rgba(242,107,58,${(0.6 * (1 - ph) * alpha).toFixed(3)})`;
       ctx.lineWidth = 1.5;
       ctx.beginPath(); ctx.arc(hx, hy, (4 + ph * 22) * k, 0, Math.PI * 2); ctx.stroke();
-      ctx.fillStyle = `rgba(201,232,121,${alpha.toFixed(3)})`;
+      ctx.fillStyle = `rgba(242,107,58,${alpha.toFixed(3)})`;
       ctx.beginPath(); ctx.arc(hx, hy, 4 * k, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
       ctx.beginPath(); ctx.arc(hx, hy, 1.6 * k, 0, Math.PI * 2); ctx.fill();
@@ -442,6 +477,12 @@ export default function GlobeJourney() {
       sNow = s;
       bigNow = big;
 
+      // Clock for the moving image backgrounds on the pillar cards (set only while a card is on screen)
+      for (const card of els.cards) {
+        const r = card.getBoundingClientRect();
+        if (r.bottom > -60 && r.top < H + 60) card.style.setProperty("--gj-t", rm ? "0" : t.toFixed(2));
+      }
+
       // While the globe pours into the pillars it draws above the page so it is never hidden by cards
       const wantZ = s > (narrow ? 0.6 : 0.02) && !(s >= 1 && focusR && (focusR.bottom < 0 || focusR.top > H)) ? "2" : "0";
       if (canvas.style.zIndex !== wantZ) canvas.style.zIndex = wantZ;
@@ -492,7 +533,8 @@ export default function GlobeJourney() {
         const useBig = s < 1;
         const useMini = s > 0 && hasMini;
         const bcx = big.cx + ox, bcy = big.cy + oy;
-        const ksB = clamp(big.R / 340, 0.5, 1);
+        const ksB = clamp(big.R / 340, 0.65, 1);
+        if (s < 1) drawNetwork({ cx: bcx, cy: bcy, R: big.R }, t, (1 - s) * bigAlpha * 0.9);
 
         for (let k = 0; k < N; k++) {
           const p = pts[k];
@@ -512,7 +554,7 @@ export default function GlobeJourney() {
             const xM = out[0], yM = out[1], zM = out[2];
             const sxM = m.cx + xM * m.R;
             const syM = m.cy - yM * m.R;
-            const ksM = clamp(m.R / 340, 0.5, 1);
+            const ksM = clamp(m.R / 340, 0.65, 1);
             e = s >= 1 || !useBig ? 1 : ease(clamp((s - p.h * 0.45) / 0.55));
             if (e >= 1) {
               x = xM; y = yM; z = zM; sx = sxM; sy2 = syM; R = m.R; ks = ksM;
@@ -545,11 +587,11 @@ export default function GlobeJourney() {
             const limb = Math.pow(1 - z, 2.2);
             const lit = Math.max(0, x * L[0] + y * L[1] + z * L[2]);
             a = p.land ? 0.45 + 0.35 * lit + 0.35 * limb : 0.1 + 0.1 * limb;
-            size = (p.land ? 1.1 : 0.72) * p.s * (0.75 + 0.35 * z + 0.4 * limb) * ks;
+            size = (p.land ? 1.1 : 0.72) * p.s * (0.75 + 0.35 * z + 0.4 * limb) * ks * DOT;
           } else {
             if (!p.land) continue;
             a = 0.07 * (1 + z);
-            size = 0.7 * p.s * ks;
+            size = 0.7 * p.s * ks * DOT;
           }
           if (p.india && z > 0) a += 0.28;
           a = Math.min(1, a + p.g * 0.6) * lerp(bigAlpha, 1, e);
@@ -614,7 +656,7 @@ export default function GlobeJourney() {
             drawRings(minis[i], miniYaw[i], 0.25, al, 1);
             if (i === 0) drawBeacon(minis[i], miniYaw[i], 0.25, al, t);
             if (miniHover[i] > 0.02) {
-              ctx.strokeStyle = `rgba(39,198,183,${(0.55 * miniHover[i]).toFixed(3)})`;
+              ctx.strokeStyle = `rgba(31,184,207,${(0.55 * miniHover[i]).toFixed(3)})`;
               ctx.lineWidth = 1.5;
               ctx.beginPath(); ctx.arc(minis[i].cx, minis[i].cy, minis[i].R * 1.12, 0, Math.PI * 2); ctx.stroke();
             }
@@ -624,7 +666,7 @@ export default function GlobeJourney() {
 
       if (debug) {
         ctx.font = "12px monospace";
-        ctx.fillStyle = "#C9E879";
+        ctx.fillStyle = "#E8341C";
         ctx.fillText(`gj debug | focus: ${els.focus ? "found" : "MISSING"} | worlds: ${els.mode} | s=${s.toFixed(2)} | about: ${els.about ? "ok" : "MISSING"} | hero: ${els.hero ? "ok" : "MISSING"}`, 12, H - 14);
         ctx.strokeStyle = "rgba(201,232,121,.8)";
         ctx.lineWidth = 1;

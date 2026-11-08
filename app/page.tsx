@@ -27,13 +27,6 @@ const marqueeText = "DEMOCRACY ✦ PEOPLE ✦ PLANET ✦ ".repeat(3);
 
 const WORDS = ["Democracy", "Equity", "Climate Justice", "Digital Futures", "Peace", "Partnership", "Fair Growth", "People"];
 
-// Hover or tap a pill and the globe turns to that part of the world ("lon,lat").
-const ABOUT_PILLS = [
-  { label: "Empower citizens", at: "-62,-8" },
-  { label: "Restore public trust", at: "10,48" },
-  { label: "Build a fairer global order", at: "22,2" },
-  { label: "Home base: India", at: "78,22" },
-];
 
 function Split({ text, start = 0 }: { text: string; start?: number }) {
   return (
@@ -110,13 +103,12 @@ export default async function Home() {
             <div className="wrap gj-about-grid">
               <div className="gj-about-copy">
                 <div className="about-c-k" data-r><span className="bars"><i /><i /><i /></span>About us</div>
-                <WordReveal className="about-c-txt gj-about-txt" lines={["The Our-World Institute and Initiative brings progressives together to build alternatives and renew democracy. We work to empower citizens, restore public trust, and shape a fairer global order, through new ideas, practical programs, and stronger organizations."]} marks={{ democracy: "glow", alternatives: "glow" }} />
+                <WordReveal className="about-c-txt gj-about-txt" lines={["The Our-World Institute and Initiative brings progressives together to build alternatives and renew democracy.   We work to empower citizens, restore public trust, and shape a fairer global order, through new ideas, practical programs, and stronger organizations."]} marks={{ democracy: "glow", alternatives: "glow" }} />
                 <ul className="gj-pills" data-r aria-label="Turn the globe">
                 </ul>
               </div>
               <div>
                 <div className="gj-about-globe" data-gs="about" aria-hidden="true" />
-                <p className="gj-hint" aria-hidden="true">Drag the globe to explore</p>
               </div>
             </div>
           </section>

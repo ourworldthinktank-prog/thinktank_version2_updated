@@ -2,12 +2,12 @@ import type { ReactNode } from "react";
 export type BannerVariant = "about" | "india" | "global" | "council" | "events" | "legal";
 
 const BANNERS: Record<BannerVariant, { src: string; alt: string }> = {
-  about:   { src: "/assets/india_initiatives_banner.jpeg",   alt: "About Our World Institute" },
-  india:   { src: "/assets/india_initiatives_banner.jpeg",   alt: "India Initiative: where ideas meet action" },
-  global:  { src: "assets/global_initiatives_banner.jpeg",  alt: "Global Initiative" },
-  council: { src: "/assets/india_initiatives_banner.jpeg", alt: "Council" },
-  events:  { src: "/assets/india_initiatives_banner.jpeg",  alt: "Events" },
-  legal:   { src: "/assets/india_initiatives_banner.jpeg",   alt: "Legal" },
+  about:   { src: "/assets/about_us.webp",   alt: "About Our World Institute" },
+  india:   { src: "/assets/india_initiatives_banner.webp",   alt: "India Initiative: where ideas meet action" },
+  global:  { src: "assets/global_initiatives_banner.webp",  alt: "Global Initiative" },
+  council: { src: "/assets/advisory.webp", alt: "Council" },
+  events:  { src: "/assets/ideas.webp",  alt: "Events" },
+  legal:   { src: "/assets/ideas.webp",   alt: "Legal" },
 };
 
 export default function PageBanner({ variant }: { variant: BannerVariant }) {
