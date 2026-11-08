@@ -85,11 +85,111 @@ footer.ft,.home-dark footer.ft{position:relative;overflow:hidden;background:line
 .ft .ft-tag span{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:#0F1B4D}
 
 @media (max-width:760px){
-  .ft-top{padding:44px 0 20px;gap:28px}
-  .ft-right{width:100%}
-  footer.ft .ft-btn{width:100%;justify-content:center}
-  .ft-sky{height:120px}
-  .ft-tag{padding-right:0}
+
+  /* Main footer spacing */
+  footer.ft .ft-top{
+    width:calc(100% - 40px);
+    padding:36px 0 24px;
+    gap:28px;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  /* Logo section */
+  footer.ft .ft-left{
+    width:100%;
+    max-width:100%;
+    flex:none;
+    display:grid;
+    gap:18px;
+    justify-items:start;
+  }
+
+  footer.ft .ft-logo{
+    display:block;
+    width:auto;
+    margin:0;
+    padding:0;
+  }
+
+  footer.ft .ft-logo img{
+    display:block;
+    height:68px;
+    width:auto;
+    max-width:100%;
+    object-fit:contain;
+  }
+
+  /* FIX: Remove the unwanted horizontal line */
+  footer.ft .ft-nav{
+    width:100%;
+    border-top:none !important;
+    padding-top:0 !important;
+    margin-top:0;
+  }
+
+  /* Navigation links */
+  footer.ft .ft-links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 20px;
+    margin:0;
+    padding:0;
+  }
+
+  footer.ft .ft-links a{
+    font-size:14px;
+    padding:4px 0 10px;
+  }
+
+  /* Connect section */
+  footer.ft .ft-right{
+    width:100%;
+    min-width:0;
+    gap:12px;
+    justify-items:start;
+  }
+
+  footer.ft .ft-h{
+    font-size:20px;
+  }
+
+  footer.ft .ft-right p{
+    margin:0;
+    font-size:15px;
+    overflow-wrap:anywhere;
+  }
+
+  footer.ft .ft-btn{
+    width:100%;
+    justify-content:center;
+  }
+
+  /* Monument skyline */
+  footer.ft .ft-sky{
+    height:120px;
+  }
+
+  /* Copyright section */
+  footer.ft .ft-bar-in{
+    width:calc(100% - 40px);
+    padding:18px 0;
+    gap:16px;
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  footer.ft .ft-copy{
+    font-size:14px;
+    line-height:1.6;
+  }
+
+  /* Footer slogan */
+  footer.ft .ft-tag{
+    padding-right:0;gap:10px;flex-wrap:wrap;
+  }
+footer.ft .ft-tag span{font-size:11px;letter-spacing:.15em;}
 }
 @media (prefers-reduced-motion:reduce){
   .ft-lg img,.ft-btn,.ft-btn svg{transition:none!important}

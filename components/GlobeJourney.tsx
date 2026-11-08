@@ -25,7 +25,7 @@ const hexRgb = (h: string): [number, number, number] => {
 };
 
 // Palette from the Bharat Summit globe artwork: amber, orange, red, cyan, teal, deep teal, navy.
-const COLS = ["#F5A12A", "#F26B3A", "#E8341C", "#1FB8CF", "#1E9C8C", "#1C6E8C", "#1C2D5E"].map(hexRgb);
+const COLS = ["#F5A12A", "#F5A12A", "#E8341C", "#1FB8CF", "#1E9C8C", "#1C6E8C", "#1C2D5E"].map(hexRgb);
 const NC = COLS.length;
 const NA = 8;
 
