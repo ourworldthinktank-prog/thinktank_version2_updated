@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CouncilBanner from "@/components/CouncilBanner";
 import HeroWords from "@/components/HeroWords";
 import Pillars from "@/components/Pillars";
 import WordReveal from "@/components/WordReveal";
@@ -25,7 +24,7 @@ const closingWords = [
 ];
 const marqueeText = "DEMOCRACY ✦ PEOPLE ✦ PLANET ✦ ".repeat(3);
 
-const WORDS = ["Democracy", "Equity", "Climate Justice", "Digital Futures", "Peace", "Partnership", "Fair Growth", "People"];
+const WORDS = ["Democracy", "Equality", "Climate Justice", "Digital Futures", "Peace", "Partnership", "Fair Growth", "People"];
 
 
 function Split({ text, start = 0 }: { text: string; start?: number }) {
@@ -123,7 +122,6 @@ export default async function Home() {
             </div>
           </section>
 
-          {/* <CouncilBanner people={people} /> */}
         </main>
         <Footer />
       </div>

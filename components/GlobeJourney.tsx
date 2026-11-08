@@ -31,7 +31,7 @@ const NA = 8;
 
 const CHIPS = [
   { label: "Democracy", sub: "India, the world’s largest", lon: 78, lat: 22, ang: -0.95 },
-  { label: "Equity", sub: "Fair growth for all", lon: 22, lat: 2, ang: 0.35 },
+  { label: "Equality", sub: "Fair growth for all", lon: 22, lat: 2, ang: 0.35 },
   { label: "Planet", sub: "One shared home", lon: -62, lat: -8, ang: 1.95 },
 ];
 
