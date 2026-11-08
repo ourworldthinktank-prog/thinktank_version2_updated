@@ -96,7 +96,7 @@ html[data-intro="run"] .home-dark{visibility:hidden}
 .hm-grid{display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:30px;padding:70px 0 30px}
 .hm-hero .eyebrow{color:#33427A}
 .hm-hero h1{font-family:var(--serif);font-size:clamp(2.9rem,6.8vw,5.6rem);font-weight:800;line-height:1.02;margin:14px 0 22px}
-.hm-hero h1 em{font-style:normal;color:var(--co)}
+.hm-hero h1 em{font-style:normal;color:var(--am)}
 .kw{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em;margin-right:.26em}
 .kw:last-of-type{margin-right:0}
 .kw > span{display:inline-block;transform:translateY(110%) rotate(4deg);opacity:0}
