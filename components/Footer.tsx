@@ -37,7 +37,7 @@ const css = `
 /* Light footer in the style of the Bharat Summit site: logo and links on the left, connect on the right,
    a skyline of monuments along the bottom, and a thin bar underneath. */
 footer.ft,.home-dark footer.ft{position:relative;overflow:hidden;background:linear-gradient(180deg,#fff 0%,#F6F7FB 100%);color:#0F1B4D;margin-top:0}
-.ft-top{width:min(1160px,calc(100% - 48px));margin:0 auto;padding:64px 0 26px;display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;position:relative;z-index:2}
+.ft-top{width:min(1160px,calc(100% - 48px));margin:0 auto;padding:0px 0 106px;display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;position:relative;z-index:2}
 .ft-left{flex:1 1 520px;max-width:620px;display:grid;gap:24px;justify-items:start}
 .ft-logo{display:inline-block}
 .ft-logo img{display:block;height:68px;width:auto}
