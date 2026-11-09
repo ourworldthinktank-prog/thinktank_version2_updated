@@ -129,180 +129,67 @@ footer.ft,.home-dark footer.ft{position:relative;overflow:hidden;background:line
 .ft .ft-tag span{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:#0F1B4D}
 
 
+
 @media (max-width: 760px) {
 
-  /* Footer main layout */
-  footer.ft {
-    overflow: hidden;
-  }
-
-  footer.ft .ft-top {
-    width: calc(100% - 40px);
-    padding: 35px 0 25px;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 32px !important;
-  }
-
-  /* Logo and navigation */
   footer.ft .ft-left {
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
     width: 100% !important;
-    max-width: 100% !important;
-    flex: none !important;
-    gap: 22px !important;
-    position: relative;
+    gap: 18px !important;
   }
 
-  footer.ft .ft-logo {
-    display: block !important;
-    width: auto !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  footer.ft .ft-logo img {
-    display: block !important;
-    height: 68px !important;
-    width: auto !important;
-    max-width: 180px !important;
-    object-fit: contain;
-  }
-
-  /* Navigation container */
   footer.ft .ft-nav {
     display: block !important;
     width: 100% !important;
-    height: auto !important;
-    padding: 0 !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 0 0 8px !important;
     margin: 0 !important;
-    border: 0 !important;
-    position: relative !important;
-    overflow: visible !important;
+    border: none !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
 
-  /* One link per line */
+  footer.ft .ft-nav::-webkit-scrollbar {
+    display: none;
+  }
+
   footer.ft .ft-links {
     display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
+    flex-direction: row !important;
     flex-wrap: nowrap !important;
-    width: 100% !important;
-    gap: 15px !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 18px !important;
+    width: max-content !important;
+    white-space: nowrap !important;
     margin: 0 !important;
     padding: 0 !important;
     list-style: none !important;
   }
 
   footer.ft .ft-links li {
-    display: block !important;
-    width: auto !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-    position: relative !important;
-    line-height: 1.5 !important;
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
   }
 
   footer.ft .ft-links a {
     display: inline-block !important;
-    position: relative !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    border: none !important;
-    background: none !important;
-    color: #0F1B4D !important;
-    font-size: 15px !important;
+    white-space: nowrap !important;
+    font-size: 13px !important;
     font-weight: 600 !important;
-    line-height: 1.5 !important;
+    padding: 0 !important;
+    color: #0F1B4D !important;
     text-decoration: none !important;
   }
 
-  footer.ft .ft-links a::before,
   footer.ft .ft-links a::after {
     display: none !important;
-    content: none !important;
-  }
-
-  /* Connect section */
-  footer.ft .ft-right {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    gap: 12px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    position: relative !important;
-  }
-
-  footer.ft .ft-h {
-    display: block !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    font-size: 21px !important;
-    line-height: 1.4 !important;
-    letter-spacing: 3px;
-  }
-
-  footer.ft .ft-right p {
-    display: block !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    font-size: 15px !important;
-    line-height: 1.6 !important;
-    overflow-wrap: anywhere;
-  }
-
-  footer.ft .ft-btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  /* Monument illustration */
-  footer.ft .ft-sky {
-    position: relative;
-    height: 120px;
-    width: 100%;
-  }
-
-  /* Copyright */
-  footer.ft .ft-bar-in {
-    width: calc(100% - 40px);
-    padding: 18px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  footer.ft .ft-copy {
-    font-size: 14px;
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  /* Brand slogan */
-  footer.ft .ft-tag {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 0;
-  }
-
-  footer.ft .ft-tag span {
-    font-size: 11px;
-    letter-spacing: 0.15em;
   }
 }
+
 
 footer.ft .ft-tag span{font-size:11px;letter-spacing:.15em;}
 }
