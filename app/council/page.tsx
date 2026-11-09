@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Shell from "@/components/Shell";
 import PageBanner from "@/components/PageBanner";
+import CouncilTabs from "@/components/CouncilTabs";
 import CouncilCard from "@/components/CouncilCard";
 import { GROUPS, byGroup } from "@/lib/council";
 import "./council.css";
@@ -21,13 +22,7 @@ export default function CouncilPage() {
       <PageBanner variant="council" />
 
       <div className="council-body">
-        <div className="subnav-bar">
-          <div className="wrap">
-            <div className="subnav" role="navigation" aria-label="Council sections">
-              {GROUPS.map((g) => <a key={g.id} href={`#${g.id}`}>{g.title}</a>)}
-            </div>
-          </div>
-        </div>
+        <CouncilTabs tabs={GROUPS.map((g) => ({ id: g.id, title: g.title, count: byGroup(g.id).length }))} />
         <div className="wrap">
           <p className="note rv" style={{ marginTop: 18 }}>Council members will be announced soon. Cards below are layout placeholders only; names and photos are published only with written permission.</p>
         </div>
