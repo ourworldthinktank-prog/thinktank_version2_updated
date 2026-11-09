@@ -283,7 +283,6 @@ export default function AboutPage() {
                 <div className="ab-img-in">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3" /><circle cx="9" cy="10" r="1.8" /><path d="M21 16l-5-5-8 8" /></svg>
                   <b>Image placeholder</b>
-                  <small>Add the photo here</small>
                 </div>
               </div>
 

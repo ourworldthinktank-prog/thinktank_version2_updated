@@ -57,6 +57,50 @@ footer.ft,.home-dark footer.ft{position:relative;overflow:hidden;background:line
 .ft-btn svg{transition:transform .3s}
 .ft-btn:hover svg{transform:translateX(4px)}
 
+  /* FORCE FOOTER NAVIGATION TO SHOW ON MOBILE */
+  footer.ft .ft-left {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+  }
+
+  footer.ft .ft-nav {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  footer.ft .ft-links {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 12px 22px !important;
+    list-style: none !important;
+    padding: 10px 0 !important;
+    margin: 0 !important;
+  }
+
+  footer.ft .ft-links li {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  footer.ft .ft-links a {
+    display: inline-block !important;
+    color: #0F1B4D !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+
 /* skyline: soft mountains and a warm glow behind moving monuments. The monuments stand on the line of the bar below. */
 .ft-sky{position:relative;height:clamp(120px,14vw,170px)}
 .ft-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 75% at 50% 100%,rgba(245,161,42,.18),transparent 70%)}

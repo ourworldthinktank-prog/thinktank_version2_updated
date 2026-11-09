@@ -52,7 +52,7 @@ export interface Platform {
 }
 
 // Official Bharat Summit website. Set NEXT_PUBLIC_BHARAT_SUMMIT_URL in the environment.
-export const BHARAT_SUMMIT_URL = process.env.NEXT_PUBLIC_BHARAT_SUMMIT_URL || "https://bharat-summit-nu.vercel.app/";
+export const BHARAT_SUMMIT_URL = process.env.NEXT_PUBLIC_BHARAT_SUMMIT_URL || "https://bharatsummit.co/";
 
 export async function getFeaturedReport(): Promise<FeaturedReport> {
   return {

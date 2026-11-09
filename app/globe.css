@@ -141,3 +141,7 @@ html:has(.home-dark), html:has(.home-dark) body { background: #fff !important; }
 .home-dark > main > section:not(.gj-close) :is(h1, h2, h3, .eyebrow):not(.pl-card *) { color: #0F1B4D !important; }
 .home-dark > main > section:not(.gj-close) :is(p, li, small):not(.pl-card *):not(.gj-hint) { color: #55638A !important; }
 .home-dark .gj-about-copy .wr-w.lit:not(.glow) { color: #0F1B4D; }
+
+.pl-summit   { --pl-img: url("/pillars/summit.jpg"); }
+.pl-research { --pl-img: url("/pillars/research.jpeg"); }
+.pl-network  { --pl-img: url("/pillars/network.jpeg"); }
