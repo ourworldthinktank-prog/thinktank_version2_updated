@@ -39,7 +39,7 @@ const marqueeText = "DEMOCRACY ✦ PEOPLE ✦ PLANET ✦ ".repeat(3);
 
 const css = `
 .ab {
-  --ab-lime: #C9E879;
+  --ab-lime: #F5A12A;
   --ab-blue: #536DFF;
   --ab-aqua: #27C6B7;
   --ab-violet: #8B5CFF;

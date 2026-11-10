@@ -275,7 +275,7 @@ export const MEMBERS: Member[] = [
       "Second paragraph.",
       "Third paragraph.",
     ],
-    photo: "/assets/1.png",
+    photo: "/assets/Salil.png",
     initials: "JD",
     placeholder: false,
   },
