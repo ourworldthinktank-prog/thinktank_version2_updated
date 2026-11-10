@@ -5,7 +5,7 @@ import { useEffect, useState, type CSSProperties } from "react";
 // Middle line of the hero headline: "Ideas for [ a fairer ] world."
 // Self-contained: it switches words with a timer and CSS transitions (no keyframes),
 // so it keeps changing even when a global stylesheet freezes animations.
-const PHRASES = ["an inclusive", "a sustainable", "a democratic", "a progressive", "a just"];
+const PHRASES = ["an inclusive", "a sustainable", "a democratic", "a progressive", "a just","a fairer"];
 
 export default function HeroWords({ phrases = PHRASES, interval = 2600 }: { phrases?: string[]; interval?: number }) {
   const [idx, setIdx] = useState(0);

@@ -21,7 +21,8 @@
 .mc:hover .mc-glow,.mc:focus-within .mc-glow{opacity:.55;transform:scale(1.1)}
 .mc:hover .mc-stripes{transform:translateX(-28px)}
 
-.mc-fig{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;filter:grayscale(1) contrast(1.05) brightness(.92);transform-origin:50% 100%;transition:filter .6s ease,transform .6s ease}
+.mc-fig{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;transform-origin:50% 100%;transition:filter .6s ease,transform .6s ease}
+/* filter:grayscale(1) contrast(1.05) brightness(.92); */
 .mc-fig img,.mc-sil{display:block;height:92%;width:auto;max-width:100%;object-fit:contain;object-position:bottom}
 .mc-sil{width:84%;height:auto;max-height:92%}
 .mc:hover .mc-fig,.mc:focus-within .mc-fig{filter:none;transform:scale(1.05)}

@@ -193,10 +193,14 @@ const css = `
 .ab-ax-p.on.ab-autoplay .ab-ax-bar { animation: ab-axbar var(--ab-ax-t, 5s) linear forwards; }
 @keyframes ab-axbar { to { transform: scaleX(1); } }
 @media (max-width: 850px) {
-  .ab-intro-card { grid-template-columns: 1fr; }
-  .ab-img { min-height: 280px; aspect-ratio: 4 / 3; }
+  .ab-intro-card { grid-template-columns: minmax(0, 1fr); }
+  .ab-img { width: 100%; min-height: 0; aspect-ratio: 4 / 3; max-height: 460px; }
   .ab-intro-text { padding: 6px 4px 14px; }
   .ab-lead-sub { max-width: none; }
+}
+@media (max-width: 600px) {
+  .ab-img { aspect-ratio: 1 / 1; }
+  .ab-lead, .ab-lead-sub { text-align: left; }
 }
 @media (max-width: 700px) {
   .ab-axw { height: calc(100svh + (var(--n) - 1) * 58svh); }
