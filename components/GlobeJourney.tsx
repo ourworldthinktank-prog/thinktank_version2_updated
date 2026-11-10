@@ -635,7 +635,7 @@ export default function GlobeJourney() {
               if ((A[2] < 0 && Math.hypot(A[0], A[1]) < 1) || (B[2] < 0 && Math.hypot(B[0], B[1]) < 1)) continue;
               const head = arc.t - i / pr.length;
               const glow = head >= 0 && head < 0.35 ? 1 - head / 0.35 : 0;
-              ctx.strokeStyle = `rgba(${r},${g},${b},${((0.16 + 0.7 * glow) * al).toFixed(3)})`;
+              ctx.strokeStyle = `rgba(${r},${g},${b},${((0.20 + 0.7 * glow) * al).toFixed(3)})`;
               ctx.beginPath();
               ctx.moveTo(bcx + A[0] * big.R, bcy - A[1] * big.R);
               ctx.lineTo(bcx + B[0] * big.R, bcy - B[1] * big.R);
@@ -666,7 +666,7 @@ export default function GlobeJourney() {
 
       if (debug) {
         ctx.font = "12px monospace";
-        ctx.fillStyle = "#E8341C";
+        ctx.fillStyle = "#F5A12A";
         ctx.fillText(`gj debug | focus: ${els.focus ? "found" : "MISSING"} | worlds: ${els.mode} | s=${s.toFixed(2)} | about: ${els.about ? "ok" : "MISSING"} | hero: ${els.hero ? "ok" : "MISSING"}`, 12, H - 14);
         ctx.strokeStyle = "rgba(201,232,121,.8)";
         ctx.lineWidth = 1;
