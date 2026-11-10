@@ -1,0 +1,45 @@
+/* Footer: white page flows into a deep navy footer through an animated wave. Classes are prefixed ft2- */
+footer.ft2{--ft2-navy:#031F54;--ft2-deep:#01143A;--ft2-soft:rgba(255,255,255,.78);--ft2-teal:#14A68F;--ft2-amber:#F7B71E;--ft2-red:#E8233A;--ft2-wh:clamp(140px,17vw,250px);position:relative;color:#fff;margin:0;font-family:"Jost","Futura","Century Gothic",system-ui,sans-serif;background:none;overflow:visible}
+.home-dark footer.ft2{position:relative;z-index:2}
+.ft2-wave{display:block;width:100%;height:var(--ft2-wh);margin-bottom:-1px}
+.ft2-sky{position:absolute;left:0;right:0;top:var(--ft2-wh);bottom:0;width:100%;height:calc(100% - var(--ft2-wh));z-index:1;pointer-events:none}
+.ft2-body{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--ft2-navy) 0%,var(--ft2-deep) 100%);padding:clamp(8px,2vw,24px) 0 calc(26px + env(safe-area-inset-bottom,0px))}
+.ft2-body::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(45% 70% at 6% 30%,rgba(20,166,143,.14),transparent 70%),radial-gradient(40% 60% at 98% 25%,rgba(232,35,58,.10),transparent 70%);-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 35%);mask-image:linear-gradient(180deg,transparent 0,#000 35%)}
+.ft2-grid{position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:0 clamp(24px,5vw,64px);display:grid;grid-template-columns:minmax(0,2fr) minmax(0,.85fr) minmax(0,.95fr) minmax(0,1.2fr);gap:40px;align-items:start}
+.ft2-logo{display:inline-block;line-height:0}
+.ft2-logo img{display:block;width:clamp(160px,15vw,200px);height:auto;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.ft2-logo:hover img{transform:translateY(-3px) rotate(-2deg)}
+.ft2-logo:focus-visible{outline:2px solid var(--ft2-amber);outline-offset:6px;border-radius:6px}
+.ft2-tag{margin:22px 0 0;font-size:clamp(1.25rem,1.75vw,1.6rem);font-weight:500;line-height:1.25;color:#fff}
+.ft2-tag span{display:inline-block;opacity:0;transform:translateY(12px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+footer.ft2.in .ft2-tag span{opacity:1;transform:none}
+footer.ft2.in .ft2-tag span:nth-child(2){transition-delay:.18s}
+footer.ft2.in .ft2-tag span:nth-child(3){transition-delay:.36s}
+.ft2-tag b{color:var(--ft2-amber)}
+footer.ft2 .ft2-h{margin:64px 0 24px;font-size:.82rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:#fff;font-family:inherit}
+footer.ft2 .ft2-list{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+footer.ft2 .ft2-list li{width:auto;border:0;padding:0}
+footer.ft2 .ft2-col a{--c:var(--ft2-teal);position:relative;display:inline-flex;align-items:center;gap:0;color:var(--ft2-soft);text-decoration:none;font-size:1.1rem;transition:color .3s,gap .35s cubic-bezier(.2,.8,.2,1)}
+footer.ft2 .ft2-col li:nth-child(2) a{--c:var(--ft2-amber)}
+footer.ft2 .ft2-col li:nth-child(3) a{--c:var(--ft2-red)}
+footer.ft2 .ft2-col a::before{content:"";width:0;height:2px;border-radius:2px;background:var(--c);transition:width .35s cubic-bezier(.2,.8,.2,1)}
+footer.ft2 .ft2-col a:hover,footer.ft2 .ft2-col a:focus-visible{color:#fff;gap:10px;outline:none}
+footer.ft2 .ft2-col a:hover::before,footer.ft2 .ft2-col a:focus-visible::before{width:16px}
+footer.ft2 .ft2-mail a{--c:var(--ft2-amber);font-size:1.05rem}
+@media (min-width:901px){footer.ft2 .ft2-mail a{white-space:nowrap}}
+.ft2-copy{position:relative;z-index:2;max-width:1240px;margin:clamp(56px,7vw,88px) auto 0;padding:18px clamp(24px,5vw,64px) 0;color:rgba(255,255,255,.55);font-size:.8rem;letter-spacing:.02em}
+.ft2-copy::before{content:"";position:absolute;top:0;left:clamp(24px,5vw,64px);right:clamp(24px,5vw,64px);height:1px;background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,.04))}
+.ft2-copy p{margin:0;color:inherit;font-size:inherit}
+@media (max-width:900px){
+  .ft2-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ft2-brand{grid-column:1/-1}
+  footer.ft2 .ft2-h{margin-top:8px}
+}
+@media (max-width:560px){
+  .ft2-grid{grid-template-columns:1fr 1fr}
+  .ft2-mail-col{grid-column:1/-1}
+}
+@media (prefers-reduced-motion:reduce){
+  .ft2-tag span{opacity:1;transform:none;transition:none}
+  footer.ft2 .ft2-col a,footer.ft2 .ft2-col a::before,.ft2-logo img{transition:none}
+}

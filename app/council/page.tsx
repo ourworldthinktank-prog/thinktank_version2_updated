@@ -24,7 +24,6 @@ export default function CouncilPage() {
       <div className="council-body">
         <CouncilTabs tabs={GROUPS.map((g) => ({ id: g.id, title: g.title, count: byGroup(g.id).length }))} />
         <div className="wrap">
-          <p className="note rv" style={{ marginTop: 18 }}>Council members will be announced soon. Cards below are layout placeholders only; names and photos are published only with written permission.</p>
         </div>
 
         {GROUPS.map((g, gi) => (

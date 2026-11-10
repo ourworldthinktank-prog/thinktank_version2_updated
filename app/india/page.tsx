@@ -42,8 +42,8 @@ export default function IndiaPage() {
         <div className="wrap">
           <div className="rv">
             <div className="bars"><i /><i /><i /></div>
-            <h2>Who we bring together</h2>
-            <p className="lead-in">A growing circle of people and institutions working for democracies that take care of people and planet.</p>
+            <h2>Bringing People Together</h2>
+            <p className="lead-in">A widening network of people and institutions advancing democracies that serve people and protect the planet.</p>
             <div className="pill-cloud" aria-label="Who we bring together">
               <span>Progressive parties</span><span>Think tanks</span><span>Governments</span><span>Businesses</span><span>Diaspora</span><span>Communications teams</span>
             </div>
@@ -56,7 +56,7 @@ export default function IndiaPage() {
           <div className="cta rv">
             <div>
               <h2>The flagship: Bharat Summit</h2>
-              <p>An annual global event for all progressives to plan and work together, in Hyderabad. Dates to be announced.</p>
+              <p>An annual global event for all progressives to plan and work together, in Hyderabad.</p>
             </div>
             <a className="btn btn-primary" href={BHARAT_SUMMIT_URL} target="_blank" rel="noopener noreferrer">Visit Bharat Summit website <ArrowIcon /></a>
           </div>

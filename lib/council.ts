@@ -20,9 +20,9 @@ export interface Member {
 }
 
 export const GROUPS: { id: CouncilGroupId; title: string; blurb: string; count: number; role: string }[] = [
-  { id: "leadership", title: "Leadership", blurb: "Senior voices guiding the vision and direction of the Institute and the Initiative.", count: 9, role: "Designation" },
-  { id: "executive", title: "Executive", blurb: "The team that runs programmes, research and partnerships day to day.", count: 14, role: "Role" },
-  { id: "trustees", title: "Trustees", blurb: "Trustees who safeguard the mission, independence and good governance of the organisation.", count: 2, role: "Trustee" },
+  { id: "leadership", title: "Leadership", blurb: "", count: 9, role: "Designation" },
+  { id: "executive", title: "Executive", blurb: "", count: 14, role: "Role" },
+  { id: "trustees", title: "Trustees", blurb: "", count: 2, role: "Trustee" },
 ];
 
 // Sample countries only, to show how the card looks. Replace with the real ones.
@@ -310,10 +310,10 @@ export const MEMBERS: Member[] = [
     role: "iTech Policy",
     country: "Australia",
     org: "",
-    short: "Tina Wiremu-Brook is an AI ethics and tech policy specialist who leads responsible AI initiatives within Australia's public education system.",
+    short: "Christina Wiremu-Brook is an AI ethics and tech policy specialist who leads responsible AI initiatives within Australia's public education system.",
     long: [
-      "Tina Wiremu-Brook is an AI ethics and tech policy specialist who leads responsible AI initiatives within Australia's public education system.",
-      "She has a background in indigenous policymaking, developed culturally safe education models, and studied AI ethics at Tsinghua University. Tina has launched the largest generative AI pilot in education, created safe AI assessment tools, and influences AI policy at state and federal levels.",
+      "Christina Wiremu-Brook is an AI ethics and tech policy specialist who leads responsible AI initiatives within Australia's public education system.",
+      "She has a background in indigenous policymaking, developed culturally safe education models, and studied AI ethics at Tsinghua University. Christina has launched the largest generative AI pilot in education, created safe AI assessment tools, and influences AI policy at state and federal levels.",
     ],
     photo: "/assets/christina.webp",
     initials: "CW",

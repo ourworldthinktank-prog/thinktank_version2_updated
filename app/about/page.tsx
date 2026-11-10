@@ -289,12 +289,6 @@ export default function AboutPage() {
                   dimensions to develop alternative solutions, empower citizens, revitalise
                   democracy, and build a <mark>fairer global order.</mark>
                 </p>
-                <p className="ab-lead-sub">
-                  This requires rethinking established paradigms, reimagining institutions,
-                  modernising operational approaches, restoring public trust through a compelling
-                  vision for a shared future, harnessing disruptive innovations for the common
-                  good, and reclaiming the centre through <mark>new coalitions and partnerships.</mark>
-                </p>
               </div>
             </div>
           </div>
@@ -325,8 +319,7 @@ export default function AboutPage() {
             <div className="ab-pillars-head ab-rv">
               <div>
                 <div className="ab-eyebrow"><i /><i /><i /></div>
-                <span className="ab-kicker">The Path forward</span>
-                <h2 className="ab-h2">How we <span className="ab-accent">get there.</span></h2>
+                <h2 className="ab-h2">The <span className="ab-accent">Path Forward.</span></h2>
               </div>
               <p className="ab-sub">
                 Six commitments that guide the Institute and the Initiative.
