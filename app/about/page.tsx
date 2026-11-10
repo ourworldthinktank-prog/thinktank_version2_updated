@@ -303,10 +303,7 @@ export default function AboutPage() {
                 <span className="ab-kicker">Our purpose</span>
                 <h2 className="ab-h2">What we <span className="ab-accent">aim</span> to do.</h2>
               </div>
-              <p className="ab-sub">
-                Four ambitions. One shared direction: a fairer, more democratic
-                world that works for everyone.
-              </p>
+
             </div>
 
             <AimsAccordion aims={aims} />
@@ -321,9 +318,7 @@ export default function AboutPage() {
                 <div className="ab-eyebrow"><i /><i /><i /></div>
                 <h2 className="ab-h2">The <span className="ab-accent">Path Forward.</span></h2>
               </div>
-              <p className="ab-sub">
-                Six commitments that guide the Institute and the Initiative.
-              </p>
+
             </div>
           </div>
         </section>

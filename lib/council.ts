@@ -20,8 +20,8 @@ export interface Member {
 }
 
 export const GROUPS: { id: CouncilGroupId; title: string; blurb: string; count: number; role: string }[] = [
-  { id: "leadership", title: "Leadership", blurb: "", count: 9, role: "Designation" },
-  { id: "executive", title: "Executive", blurb: "", count: 14, role: "Role" },
+  { id: "leadership", title: "Leadership Council", blurb: "", count: 9, role: "Designation" },
+  { id: "executive", title: "Executive Council", blurb: "", count: 14, role: "Role" },
   { id: "trustees", title: "Trustees", blurb: "", count: 2, role: "Trustee" },
 ];
 
