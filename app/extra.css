@@ -234,7 +234,7 @@ footer{overflow:hidden}
   radial-gradient(460px 280px at 95% 10%, rgba(138,63,224,.28), transparent 70%),
   radial-gradient(420px 240px at 55% 110%, rgba(242,107,58,.20), transparent 70%)}
 footer .wrap{position:relative}
-footer::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;z-index:2;background:linear-gradient(90deg,var(--amber),var(--coral),var(--rose),var(--violet),var(--cyan),var(--teal))}
+/* footer::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;z-index:2;background:linear-gradient(90deg,var(--amber),var(--coral),var(--rose),var(--violet),var(--cyan),var(--teal))} */
 footer{scroll-margin-top:90px}
 .logo-img-foot{background:#fff;border-radius:14px;padding:8px 14px;height:62px;box-shadow:0 0 0 4px rgba(255,255,255,.10),0 14px 34px rgba(31,193,222,.35)}
 @media (min-width:1025px){ .foot{grid-template-columns:1.25fr .8fr .8fr 1.3fr} }
