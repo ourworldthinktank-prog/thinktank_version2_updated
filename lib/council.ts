@@ -68,7 +68,6 @@ export const MEMBERS: Member[] = [
     long: [
       "Salman Khurshid held cabinet positions including Law and Justice Minister, Minority Affairs Minister, Corporate Affairs Minister, and for External Affairs",
       "Khurshid is a prolific author and senior Counsel at the Supreme Court. He was also the President of the Delhi Public School Society and Dr. Zakir Husain Study Circle. He is currently a Member of the Congress Working Committee and Chairperson of the Foreign Affairs Department.",
-      "Third paragraph.",
     ],
     photo: "/assets/1.png",
     initials: "JD",

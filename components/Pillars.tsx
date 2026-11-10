@@ -61,8 +61,8 @@ export default function Pillars({ summitHref }: { summitHref: string }) {
             <a key={p.n} className={`pl-card pl-${p.icon}`} href={p.href} data-r data-spot data-tilt
               style={{ ["--rd" as string]: `${i * 140}ms`, ...(p.image ? { ["--pl-img" as string]: `url("${p.image}")` } : {}) }}
               {...(p.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
-              <span className="pl-num" aria-hidden="true">{p.n}</span>
-              <Icon k={p.icon} />
+              {/* <span className="pl-num" aria-hidden="true">{p.n}</span>
+              <Icon k={p.icon} /> */}
               <h3>{p.title}</h3>
               <p>{p.text}</p>
               <span className="pl-go">{p.external ? "Visit site" : "Learn more"} <ArrowIcon size={16} /></span>

@@ -178,15 +178,13 @@ html[data-intro] .home-dark [data-r].in{opacity:1;translate:0 0}
 
 /* ---------- three pillars ---------- */
 .pl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;perspective:1100px}
-.pl-card{--tx:0deg;--ty:0deg;--ph:0;position:relative;overflow:hidden;isolation:isolate;border-radius:22px;padding:28px 26px 26px;min-height:460px;display:flex;flex-direction:column;background:linear-gradient(135deg,var(--p1),var(--p2));border:0;color:#fff;box-shadow:0 24px 50px -28px var(--p2);transform:rotateX(var(--tx)) rotateY(var(--ty));transition:transform .25s ease-out,box-shadow .4s}
+.pl-card{--tx:0deg;--ty:0deg;--ph:0;position:relative;overflow:hidden;isolation:isolate;border-radius:22px;padding:28px 26px 26px;min-height:460px;display:flex;flex-direction:column;background:linear-gradient(135deg,var(--p1),var(--p2));border:0;color:#fff;box-shadow:0 24px 50px -28px var(--p2);transform:rotateX(var(--tx)) rotateY(var(--ty));transition:transform .25s ease-out,box-shadow .4s;justify-content: flex-end;}
 .pl-card:hover{box-shadow:0 34px 70px -24px var(--p2)}
 .pl-summit{--pc:#fff;--p1:#F5A12A;--p2:#F26B3A;--ph:0}
 .pl-research{--pc:#fff;--p1:#1FC1DE;--p2:#1C9FC4;--ph:2.1}
 .pl-network{--pc:#fff;--p1:#1E9C8C;--p2:#1C6E8C;--ph:4.2}
 
-/* IMAGE AREA (placeholder). To use a real photo, set --pl-img on the card, e.g.
-   .pl-summit{ --pl-img:url("/images/pillars/summit.jpg") }   (file in /public/images/pillars/)
-   The slow drift and glow movement keeps running on top of it. --gj-t is a clock set by GlobeJourney. */
+   /* The slow drift and glow movement keeps running on top of it. --gj-t is a clock set by GlobeJourney. */
 .pl-card::before{content:"";position:absolute;inset:-8%;z-index:-2;pointer-events:none;
   background-image:var(--pl-img,none),
     radial-gradient(circle at calc(30% + sin(var(--gj-t,0)*.55 + var(--ph))*20%) calc(32% + cos(var(--gj-t,0)*.45 + var(--ph))*18%),rgba(255,255,255,.42),transparent 46%),

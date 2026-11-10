@@ -69,7 +69,7 @@ const pillarCss = `
 }
 
 /* Enhanced (JS ready): pinned stage driven by --in / --out per slide */
-.pl[data-ready="true"] { height: 900vh; height: 900svh; }
+.pl[data-ready="true"] { height: calc(100vh + var(--pl-n, 6) * var(--pl-per, 40) * 1vh); height: calc(100svh + var(--pl-n, 6) * var(--pl-per, 40) * 1svh); }
 .pl[data-ready="true"] .pl-stage { position: sticky; top: 0; height: 100vh; height: 100svh; padding: 0; }
 .pl[data-ready="true"] .pl-slides { position: absolute; inset: 0; }
 .pl[data-ready="true"] .pl-s {
@@ -114,7 +114,7 @@ const pillarCss = `
   .pl-foot { flex-direction: column; align-items: flex-start; gap: 4px; }
 }
 `;
-
+const PER_PILLAR_VH = 40; // scroll distance per pillar, in viewport heights. Lower = faster (30 is very quick, 60 is slow)
 export function PillarsStage({ pillars }: { pillars: Pillar[] }) {
   const rootRef = useRef<HTMLElement>(null);
   const slideRefs = useRef<(HTMLLIElement | null)[]>([]);
@@ -124,8 +124,8 @@ export function PillarsStage({ pillars }: { pillars: Pillar[] }) {
     if (!root) return;
 
     const N = pillars.length;
-    const HALF = 0.05; // half-width of each hand-over, as a share of total scroll
-    // Reduced motion: keep the scroll-linked swap, but as a plain cross-fade (no travel, no blur).
+const HALF = 0.28 / N; // each hand-over takes about half the space between two pillars, so a swap is quick
+//     // Reduced motion: keep the scroll-linked swap, but as a plain cross-fade (no travel, no blur).
     const rm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     root.dataset.rm = rm ? "true" : "false";
 
@@ -153,6 +153,8 @@ export function PillarsStage({ pillars }: { pillars: Pillar[] }) {
       }
     };
 
+    root.style.setProperty("--pl-n", String(N));
+    root.style.setProperty("--pl-per", String(PER_PILLAR_VH));
     root.dataset.ready = "true";
     update();
     // capture: also catches scrolling inside a wrapper element, not just the window
