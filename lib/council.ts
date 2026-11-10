@@ -56,17 +56,18 @@ function make(group: CouncilGroupId, count: number, role: string): Member[] {
 }
 
 export const MEMBERS: Member[] = [
+    // LEADERSHIP COUNCIL
   {
     slug: "Salman_Khurshid",            // used in the page address and the photo file name
     group: "leadership",              // "leadership", "executive" or "trustees"
     name: "Salman Khurshid",
-    role: "Senior Advocate; Indian National Congress; former Minister of External Affairs of India (2012-2014)",
+    role: "Senior Advocate; Indian National Congres, Former Minister of External Affairs of India (2012-2014)",
     country: "India",
     org: "",
-    short: "Two or three lines shown when someone hovers over the card.",
+    short: "Salman Khurshid held cabinet positions including Law and Justice Minister, Minority Affairs Minister, Corporate Affairs Minister, and for External Affairs",
     long: [
-      "First paragraph of the full biography.",
-      "Second paragraph.",
+      "Salman Khurshid held cabinet positions including Law and Justice Minister, Minority Affairs Minister, Corporate Affairs Minister, and for External Affairs",
+      "Khurshid is a prolific author and senior Counsel at the Supreme Court. He was also the President of the Delhi Public School Society and Dr. Zakir Husain Study Circle. He is currently a Member of the Congress Working Committee and Chairperson of the Foreign Affairs Department.",
       "Third paragraph.",
     ],
     photo: "/assets/1.png",
@@ -90,7 +91,6 @@ export const MEMBERS: Member[] = [
     initials: "JD",
     placeholder: false,               // removes the "placeholder profile" note on her page
   },
-  // LEADERSHIP COUNCIL
   {
     slug: "Anies_Baswedan",
     group: "leadership",

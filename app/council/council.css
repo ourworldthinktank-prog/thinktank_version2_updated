@@ -94,7 +94,7 @@
 .mp-role{font-size:1.1rem;color:#4a5578}
 .mp-meta{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 26px}
 .mp-meta span{padding:8px 14px;border-radius:999px;background:#eef1fb;font-size:.8rem;font-weight:600;color:#1B2A7A;letter-spacing:.06em;text-transform:uppercase}
-.mp-bio p{font-size:1.05rem;line-height:1.75;color:#2b3555;margin:0 0 16px;max-width:60ch}
+.mp-bio p{font-size:1.05rem;line-height:1.75;color:#2b3555;margin:0 0 16px;max-width:60ch;text-align: justify;}
 .mp-pn{display:flex;justify-content:space-between;gap:16px;margin-top:40px;padding-top:24px;border-top:1px solid rgba(11,27,68,.12);flex-wrap:wrap}
 .mp-pn a{font-weight:700;color:#0B1B44;display:grid;gap:2px}
 .mp-pn small{font-weight:500;color:#7a84a6;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase}
