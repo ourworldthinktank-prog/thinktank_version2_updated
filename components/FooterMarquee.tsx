@@ -5,9 +5,9 @@ import { useEffect, useRef } from "react";
 export type FooterLogo = { src: string; alt: string };
 
 /* ---- tweak these ---- */
-const SLOW = 42;          // px/s. Normal drift, left to right
-const FAST = 320;         // px/s. Speed while the mouse is over the strip, right to left
-const REDUCED_SLOW = 50;  // px/s. Very slow drift when the OS asks for reduced motion (set 0 to make it fully still)
+const SLOW = 30;          // px/s. Normal drift, left to right
+const FAST = 150;         // px/s. Speed while the mouse is over the strip, right to left
+const REDUCED_SLOW = 25;  // px/s. Very slow drift when the OS asks for reduced motion (set 0 to make it fully still)
 
 /**
  * Landmarks drift left to right. While the mouse is over them they speed up and run right to left,
