@@ -46,13 +46,13 @@ export default async function MemberPage({ params }: P) {
               <span className="mp-tag">{group.title}</span>
               <h1>{m.name}</h1>
               <p className="mp-role">{m.role}</p>
-              <div className="mp-meta"><span>{m.country}</span><span>{m.org}</span></div>
+              <div className="mp-meta"><span>{m.country}</span>{m.org ? <span>{m.org}</span> : null}</div>
               {m.placeholder && <p className="note">Placeholder profile. Real details are published only with written permission.</p>}
               <div className="mp-bio">{m.long.map((t, i) => <p key={i}>{t}</p>)}</div>
-              <nav className="mp-pn" aria-label="More council members">
+              <div className="mp-pn" role="navigation" aria-label="More council members">
                 {prev ? <Link href={`/council/${prev.slug}`}><small>Previous</small>← {prev.name}</Link> : <span />}
                 {next ? <Link href={`/council/${next.slug}`}><small>Next</small>{next.name} →</Link> : null}
-              </nav>
+              </div>
             </div>
           </div>
         </div>
