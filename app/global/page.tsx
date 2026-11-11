@@ -37,7 +37,7 @@ const streams: Stream[] = [
     n: "02", k: "Gatherings", t: "Conferences and Workshops", ac: "#27C6B7", on: "#0b1030",
     acts: [
       {
-        t: "Supporting think tanks to curate thematic conferences (on climate justice, digital democracy and more) and working groups in different nations, especially those heading into elections. These would be designed to indirectly showcase support for progressive parties and candidates.",
+        t: "Supporting think tanks to curate thematic \rconferences (on climate justice, digital democracy and more) and working groups in different nations, especially those heading into elections. These would be designed to indirectly showcase support for progressive parties and candidates.",
         img: "/pillars/network.jpeg",
       },
       { t: "Establishing ties with think tanks, civil society, movements and unions globally to channel grassroots issues to progressive leaders and stakeholders, and in dialogue with academics on policy research", img: "/pillars/research.jpeg" },
@@ -185,7 +185,7 @@ const CSS = `
 .gl-st h3 { margin: 18px 0 0; font-size: clamp(2rem, 4.4vw, 3.8rem); line-height: 1.02; letter-spacing: -.045em; font-weight: 850; text-align: left; text-align-last: left; hyphens: manual; }
 .gl-pill, .gl-top { text-align: left; }
 .gl-st p { margin: 0; }
-.gl-st p, .gl-st small { hyphens: auto; -webkit-hyphens: auto; overflow-wrap: break-word; }
+.gl-st p, .gl-st small { hyphens: none; -webkit-hyphens: none; overflow-wrap: normal; word-break: normal; text-wrap: pretty; }
 .gl-st small { display: block; margin-top: 14px; font-size: .98rem; line-height: 1.6; opacity: .72; }
 
 /* 01: sticky title + activities slide in */

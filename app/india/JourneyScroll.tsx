@@ -99,8 +99,8 @@ const css = `
 .jr-inner {
   --bg: linear-gradient(135deg, #536DFF, #3a4fd6); --fg: #fff;
   position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 14px;
-  min-height: clamp(320px, 50vh, 430px); padding: clamp(24px, 4vw, 40px);
-  border-radius: 28px; background: var(--bg); color: var(--fg);
+  min-height: 0; height: clamp(360px, calc(var(--jr-h) - 110px), 560px);
+  padding: clamp(26px, 4vw, 46px);  border-radius: 28px; background: var(--bg); color: var(--fg);
   box-shadow: 0 30px 60px -28px rgba(0,0,0,.7);
 }
 .jr-card[data-v="1"] .jr-inner { --bg: linear-gradient(135deg, #27C6B7, #1a9e92); --fg: #08122e; }
@@ -119,11 +119,11 @@ const css = `
 .jr-card[data-v="1"] .jr-inner, .jr-card[data-v="3"] .jr-inner { --arrow: #fff; }
 .jr-inner h3 {
   position: relative; z-index: 1; margin: auto 0 0; max-width: 14ch; color: inherit;
-  font-size: clamp(1.8rem, 3.6vw, 3rem); line-height: 1.02; letter-spacing: -.045em; font-weight: 850;
+  font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.02; letter-spacing: -.045em; font-weight: 850;
 }
 .jr-inner p {
   position: relative; z-index: 1; margin: 0; max-width: 46ch; color: inherit; opacity: .9;
-  font-size: clamp(.95rem, 1.35vw, 1.1rem); line-height: 1.6;
+  font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.6;
 }
 .jr-items {
   position: relative; z-index: 1; list-style: none; margin: 0; padding: 0; display: grid; gap: 10px;
@@ -134,7 +134,7 @@ const css = `
   font-size: clamp(.86rem, 1.2vw, 1rem); line-height: 1.45;
 }
 .jr-items i { font-style: normal; font-size: .72rem; font-weight: 800; letter-spacing: .12em; opacity: .7; padding-top: .2em; }
-.jr-card.has-items .jr-inner { min-height: clamp(380px, 60vh, 520px); }
+.jr-card.has-items .jr-inner { min-height: 0; height: clamp(360px, calc(var(--jr-h) - 110px), 560px); }
 .jr-card.has-items .jr-inner h3 { margin: 6px 0 0; max-width: 22ch; font-size: clamp(1.5rem, 2.8vw, 2.3rem); }
 .jr-wm {
   position: absolute; right: 14px; bottom: -.12em; z-index: 0; pointer-events: none;
@@ -151,7 +151,7 @@ const css = `
 @supports (height: 100svh) { .jr[data-ready="true"] { height: calc(var(--jr-h) + var(--jr-n, 4) * 120svh); } }
 .jr[data-ready="true"] .jr-stage {
   position: sticky; top: var(--jr-top); height: var(--jr-h); padding: 0;
-  --fly: 100vw; --dx: 78px; --dy: -9px; --dr: 2.2deg; --rot: 10deg; --cw: min(620px, calc(100% - 40px));
+  --fly: 100vw; --dx: 78px; --dy: -9px; --dr: 2.2deg; --rot: 10deg; --cw: min(760px, calc(100% - 40px));
 }
 .jr[data-rm="true"] .jr-stage { --rot: 0deg; --dr: 0deg; --tilt: 0; }
 .jr[data-ready="true"] .jr-cards { position: absolute; inset: 0; display: block; padding: 0; }
@@ -217,8 +217,7 @@ const css = `
   .jr { --jr-top: 64px; }
   .jr-stage { border-radius: 22px; }
   .jr[data-ready="true"] .jr-stage { --dx: 16px; --dy: -6px; --cw: calc(100% - 32px); }
-  .jr-inner { min-height: clamp(300px, 56vh, 420px); border-radius: 22px; }
-  .jr-card.has-items .jr-inner { min-height: clamp(420px, 70vh, 580px); }
+  .jr-inner, .jr-card.has-items .jr-inner { min-height: 0; height: clamp(380px, calc(var(--jr-h) - 100px), 580px); border-radius: 22px; }
   .jr[data-ready="true"] .jr-hint { display: none; }
   .jr[data-ready="true"] .jr-track { bottom: 16px; }
 }
