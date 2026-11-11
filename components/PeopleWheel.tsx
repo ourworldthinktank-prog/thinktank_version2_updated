@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const GLOBE_GIF = "/assets/globe.gif";   // put your globe GIF at public/assets/globe.gif
-const COLORS = ["#f5a12a", "#7778c9", "#a6c92b", "#16ae9c", "#f3bd18", "#17b6d1"];
+const COLORS = ["#f5a12a", "#7778c9", "#face0b", "#16ae9c", "#f3bd18", "#17b6d1"];
 const ANGLES = [-90, -30, 30, 90, 150, 210];   // clockwise from the top
 const R = 36;                                    // ring radius in a 100 x 100 box
 
@@ -145,10 +145,6 @@ export default function PeopleWheel({ items }: { items: string[] }) {
               </button>
             );
           })}
-        </div>
-
-        <div className="pw-ticks" aria-hidden="true">
-          {items.map((_, i) => <i key={i} className={i <= idx ? "on" : ""} style={{ ["--c" as string]: COLORS[i % COLORS.length] }} />)}
         </div>
       </div>
     </div>
