@@ -37,8 +37,7 @@ const streams: Stream[] = [
     n: "02", k: "Gatherings", t: "Conferences and Workshops", ac: "#27C6B7", on: "#0b1030",
     acts: [
       {
-        t: "Supporting think tanks to curate thematic conferences (on climate justice, digital democracy and more) and working groups in different nations, especially those heading into elections",
-        sub: "These would be designed to indirectly showcase support for progressive parties and candidates.",
+        t: "Supporting think tanks to curate thematic conferences (on climate justice, digital democracy and more) and working groups in different nations, especially those heading into election. These would be designed to indirectly showcase support for progressive parties and candidates.",
       },
       { t: "Establishing ties with think tanks, civil society, movements and unions globally to channel grassroots issues to progressive leaders and stakeholders, and in dialogue with academics on policy research" },
     ],
