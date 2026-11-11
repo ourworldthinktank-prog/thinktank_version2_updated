@@ -42,11 +42,11 @@
 }
 .gj-about-copy { position: relative; z-index: 2; max-width: 640px; }
 .gj-about-txt {
-  max-width: none !important; margin: 0 0 28px !important; text-align: left !important;
+  max-width: none !important; margin: 0 0 28px !important; text-align: justify !important;
   font-size: clamp(1.35rem, 2.3vw, 2rem) !important; line-height: 1.45 !important; letter-spacing: -.02em;
 }
 .gj-about-txt .wr-line {
-  text-align: left !important; text-align-last: auto !important; hyphens: none;
+  text-align: justify !important; text-align-last: auto !important; hyphens: none;
   font-size: clamp(1.3rem, 2.1vw, 1.85rem) !important; line-height: 1.55 !important; letter-spacing: -.01em;
 }
 .gj-pills { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 30px; padding: 0; list-style: none; }
@@ -143,5 +143,5 @@ html:has(.home-dark), html:has(.home-dark) body { background: #fff !important; }
 .home-dark .gj-about-copy .wr-w.lit:not(.glow) { color: #0F1B4D; }
 
 .pl-summit   { --pl-img: url("/pillars/summit.jpg"); }
-.pl-research { --pl-img: url("/pillars/research.jpeg"); }
-.pl-network  { --pl-img: url("/pillars/network.jpeg"); }
+.pl-research { --pl-img: url("/pillars/research.png"); }
+.pl-network  { --pl-img: url("/pillars/network.png"); }

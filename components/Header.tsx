@@ -51,7 +51,7 @@ export default function Header() {
               </li>
             ))}
             <li className="connect-li">
-              <a className="btn btn-primary btn-sm connect-btn" href="#connect">Connect</a>
+              <a className="btn btn-primary btn-sm connect-btn" href="#footer">Connect</a>
             </li>
           </ul>
         </nav>

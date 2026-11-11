@@ -38,9 +38,9 @@ const streams: Stream[] = [
     acts: [
       {
         t: "Supporting think tanks to curate thematic conferences (on climate justice, digital democracy and more) and working groups in different nations, especially those heading into elections. These would be designed to indirectly showcase support for progressive parties and candidates.",
-        img: "/global/conferences.jpg",
+        img: "/pillars/network.jpeg",
       },
-      { t: "Establishing ties with think tanks, civil society, movements and unions globally to channel grassroots issues to progressive leaders and stakeholders, and in dialogue with academics on policy research", img: "/global/network.jpg" },
+      { t: "Establishing ties with think tanks, civil society, movements and unions globally to channel grassroots issues to progressive leaders and stakeholders, and in dialogue with academics on policy research", img: "/pillars/research.jpeg" },
     ],
   },
 ];
@@ -233,7 +233,7 @@ const CSS = `
 .gl-panel p { font-size: clamp(1.1rem, 1.7vw, 1.4rem); line-height: 1.45; font-weight: 600; }
 
 /* 03: stacking cards */
-.gl-s3 { --st: #fff; --bw: rgba(255,255,255,.1); background: linear-gradient(160deg, #1a0f45, #4a2296 80%); color: #fff; text-align: justify; }
+.gl-s3 { --st: #fff; --bw: rgba(255,255,255,.1); background: linear-gradient(160deg, #1a0f45, #14203f 80%); color: #fff; text-align: justify; }
 .gl-s3 { --fade: 244, 247, 251; padding-bottom: clamp(150px, 18vw, 230px); }
 .gl-s3::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; z-index: 0; height: clamp(220px, 28vw, 380px); pointer-events: none;
   background: linear-gradient(to bottom, rgba(var(--fade), 0) 0%, rgba(var(--fade), .05) 16%, rgba(var(--fade), .2) 38%, rgba(var(--fade), .5) 62%, rgba(var(--fade), .84) 86%, rgb(var(--fade)) 100%); }
