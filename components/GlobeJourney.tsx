@@ -49,7 +49,7 @@ function inPoly(x: number, y: number, poly: [number, number][]) {
   return c;
 }
 function regionColour(lon: number, lat: number) {
-  if (inPoly(lon, lat, INDIA_POLY)) return lat < 21 ? 1 : 0; // India: amber / orange
+  if (inPoly(lon, lat, INDIA_POLY)) return lat < 21 ? 5 : 4; // India: amber / orange
   if (lon < -30) return lat > 15 ? (lat > 50 ? 0 : 1) : lat > -20 ? 4 : 3; // Americas
   if (lon < 52 && lat < 36) return lat < -10 ? 2 : lat < 10 ? 5 : 3; // Africa and Arabia
   if (lon < 60) return lat > 55 ? 6 : 3; // Europe
@@ -111,7 +111,7 @@ export default function GlobeJourney() {
     }
     for (let i = 0; i < INDIA_PTS.length; i += 2) {
       const lat = INDIA_PTS[i + 1] / 100;
-      push(INDIA_PTS[i] / 100, lat, lat < 21 ? 1 : 0, 1, 0.78 + Math.random() * 0.2, 1);
+      push(INDIA_PTS[i] / 100, lat, lat < 21 ? 4 : 4, 1, 0.28 + Math.random() * 0.2, 1);
     }
     for (let i = 0; i < SEA.length; i += 2) {
       if (lite && Math.random() < 0.55) continue;
@@ -617,38 +617,7 @@ export default function GlobeJourney() {
         }
 
         // India outline, beacon and arcs (big globe)
-        if (s < 1) {
-          const al = (1 - s) * bigAlpha;
-          const bp = { cx: bcx, cy: bcy, R: big.R };
-          drawRings(bp, yaw, pitch, al, 1.4);
-          ctx.lineCap = "round";
-          for (const arc of arcList) {
-            if (!rm) arc.t = (arc.t + arc.speed * dt) % 1.35;
-            const [r, g, b] = arc.col;
-            const pr: number[][] = arc.path.map((v) => {
-              proj(v[0], v[1], v[2], cB, sB, cpB, spB);
-              return [out[0], out[1], out[2]];
-            });
-            ctx.lineWidth = 1.1;
-            for (let i = 1; i < pr.length; i++) {
-              const A = pr[i - 1], B = pr[i];
-              if ((A[2] < 0 && Math.hypot(A[0], A[1]) < 1) || (B[2] < 0 && Math.hypot(B[0], B[1]) < 1)) continue;
-              const head = arc.t - i / pr.length;
-              const glow = head >= 0 && head < 0.35 ? 1 - head / 0.35 : 0;
-              ctx.strokeStyle = `rgba(${r},${g},${b},${((0.20 + 0.7 * glow) * al).toFixed(3)})`;
-              ctx.beginPath();
-              ctx.moveTo(bcx + A[0] * big.R, bcy - A[1] * big.R);
-              ctx.lineTo(bcx + B[0] * big.R, bcy - B[1] * big.R);
-              ctx.stroke();
-            }
-            const E = pr[pr.length - 1];
-            if (!(E[2] < 0 && Math.hypot(E[0], E[1]) < 1)) {
-              ctx.fillStyle = `rgba(${r},${g},${b},${(0.9 * al).toFixed(3)})`;
-              ctx.beginPath(); ctx.arc(bcx + E[0] * big.R, bcy - E[1] * big.R, 2.2, 0, Math.PI * 2); ctx.fill();
-            }
-          }
-          drawBeacon(bp, yaw, pitch, al, t);
-        }
+        
         // minis: outline, beacon, hover ring
         if (hasMini && s > 0.6) {
           const al = clamp((s - 0.6) / 0.4);
