@@ -4,7 +4,7 @@ import ScrollTop from "./Scrolltop";
 import "./footer.css";
 
 /* ---- Things you may want to change ---- */
-const LOGO_SRC = "/assets/logo1.png";   // white logo for the navy footer (file in /public/assets)
+const LOGO_SRC = "/assets/logo1.webp";   // white logo for the navy footer (file in /public/assets)
 const EMAIL = "ourworld.thinktank@gmail.com";
 const EXPLORE = [
   { label: "Home", href: "/" },

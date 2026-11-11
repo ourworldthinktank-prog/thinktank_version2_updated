@@ -18,7 +18,7 @@ export default function Logo({ footer = false }: { footer?: boolean }) {
         <img
           ref={ref}
           className={`logo-img${footer ? " logo-img-foot" : ""}`}
-          src="/assets/logo1.png"
+          src="/assets/logo1.webp"
           alt="Our World Institute & Initiative"
           onError={() => setFailed(true)}
         />
