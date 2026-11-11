@@ -114,8 +114,8 @@ const css = `
   background: radial-gradient(circle, rgba(83,109,255,.5), transparent 68%); filter: blur(30px);
   animation: ab-float 14s ease-in-out infinite;
 }
-.ab-img { position: relative; min-height: 420px; border-radius: 18px; overflow: hidden; background: #14203f; }
-.ab-img > img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.ab-img ,.ab-img video { position: relative; min-height: 420px; border-radius: 18px; overflow: hidden; background: #14203f; }
+.ab-img > img ,.ab-img video { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .ab-img::after {
   content: ""; position: absolute; inset: -40%; pointer-events: none;
   background: linear-gradient(110deg, transparent 40%, rgba(255,255,255,.16) 50%, transparent 60%);
@@ -274,8 +274,15 @@ export default function AboutPage() {
             <div className="ab-intro-card ab-rv">
               <span className="ab-intro-glow" aria-hidden="true" />
               <div className="ab-img">
-  {/* eslint-disable-next-line @next/next/no-img-element */}
-  <img src="/pillars/about_us.png" alt="Our-World Institute and Initiative" decoding="async" />
+  <video
+    src="/pillars/about_us.mp4"
+    autoPlay
+    muted
+    loop
+    playsInline
+    preload="metadata"
+    aria-label="Our-World Institute and Initiative"
+  />
   <span className="ab-img-badge" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.6 2.6 4 5.7 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.7-4-9s1.4-6.4 4-9z" /></svg>
   </span>
