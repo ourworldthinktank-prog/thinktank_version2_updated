@@ -74,7 +74,7 @@ export default async function Home() {
                     <span className="hw-line" aria-hidden="true"><Split text="world" start={4} /><em>.</em></span>
                   </h1>
                   <div className="hero-cta hm-in" style={{ ["--d" as string]: "1100ms" }}>
-                    <a className="btn btn-primary" href="#focus" data-magnetic>Explore our work <ArrowIcon /></a>
+                    <a className="btn btn-primary" href="/about" data-magnetic>Explore our work <ArrowIcon /></a>
                   </div>
                 </div>
                 {/* The globe is drawn here by <GlobeJourney />; the Democracy / Equity / Planet chips orbit it */}
