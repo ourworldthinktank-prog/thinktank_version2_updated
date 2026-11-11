@@ -14,8 +14,8 @@ const CSS = `
 .ct-bar .ct a:hover{color:#fff}
 .ct-bar .ct a.on{color:#0B1B44}
 .ct-bar .ct-t{display:grid;gap:1px;justify-items:center;line-height:1.1}
-.ct-bar .ct-main{font-size:1.02rem;font-weight:700;letter-spacing:.005em}
-.ct-bar .ct-sub{font-size:.6rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;opacity:.72}
+.ct-bar .ct-main{font-size:1.08rem;font-weight:700;letter-spacing:.005em}
+.ct-bar .ct-sub{font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:none;opacity:.72}
 .ct-bar .ct a.on .ct-sub{opacity:.7}
 .ct-bar .ct b{min-width:22px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,.16);font-size:.68rem;font-weight:700;transition:background .3s}
 .ct-bar .ct a.on b{background:rgba(11,27,68,.14)}
@@ -27,7 +27,7 @@ const CSS = `
   .ct-bar .ct a{flex:1 1 0;min-width:0;padding:8px 6px}
   .ct-bar .ct b{display:none}
   .ct-bar .ct-main{font-size:.86rem}
-  .ct-bar .ct-sub{font-size:.52rem;letter-spacing:.2em}
+  .ct-bar .ct-sub{font-size:.82rem;letter-spacing:.03em}
 }
 @media (prefers-reduced-motion:reduce){.ct-bar .ct-pill{transition:none}}
 `;
