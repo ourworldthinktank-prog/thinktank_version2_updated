@@ -114,8 +114,8 @@ const css = `
   background: radial-gradient(circle, rgba(83,109,255,.5), transparent 68%); filter: blur(30px);
   animation: ab-float 14s ease-in-out infinite;
 }
-.ab-img ,.ab-img video { position: relative; min-height: 420px; border-radius: 18px; overflow: hidden; background: #14203f; }
-.ab-img > img ,.ab-img video { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.ab-img { position: relative; min-height: 420px; border-radius: 18px; overflow: hidden; background: #14203f; }
+.ab-img > img, .ab-img > video { position: absolute; inset: 0; display: block; width: 100%; height: 100%; min-height: 0; border-radius: 0; object-fit: cover; object-position: center; }
 .ab-img::after {
   content: ""; position: absolute; inset: -40%; pointer-events: none;
   background: linear-gradient(110deg, transparent 40%, rgba(255,255,255,.16) 50%, transparent 60%);
@@ -199,8 +199,10 @@ const css = `
   .ab-lead-sub { max-width: none; }
 }
 @media (max-width: 600px) {
-  .ab-img { aspect-ratio: 1 / 1; }
+  .ab-img { aspect-ratio: 4 / 3; }
   .ab-lead, .ab-lead-sub { text-align: left; }
+  .ab-img-badge { width: 42px; height: 42px; left: 12px; top: 12px; }
+.ab-img-badge svg { width: 20px; height: 20px; }
 }
 @media (max-width: 700px) {
   .ab-axw { height: calc(100svh + (var(--n) - 1) * 58svh); }

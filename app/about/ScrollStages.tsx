@@ -184,7 +184,6 @@ const HALF = 0.28 / N; // each hand-over takes about half the space between two 
           ))}
         </ol>
         <div className="pl-foot">
-          <span>Six pillars. A shared commitment.</span>
           <span>Our-World Institute &amp; Initiative</span>
         </div>
         <div className="pl-bar" aria-hidden="true"><i /></div>
