@@ -318,7 +318,6 @@ export default function AboutPage() {
                 <div className="ab-eyebrow"><i /><i /><i /></div>
                 <h2 className="ab-h2">The <span className="ab-accent">Path Forward.</span></h2>
               </div>
-
             </div>
           </div>
         </section>

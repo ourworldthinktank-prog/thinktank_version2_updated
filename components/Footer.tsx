@@ -9,7 +9,7 @@ const EMAIL = "ourworld.thinktank@gmail.com";
 const EXPLORE = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Advisory Board", href: "/advisory-board" },
+  { label: "Advisory Board", href: "/council" },
 ];
 const WORK = [
   { label: "India Initiative", href: "/india" },
