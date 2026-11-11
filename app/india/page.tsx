@@ -12,10 +12,10 @@ export const metadata: Metadata = {
 
 // DRAFT COPY adapted from the client's note; client to approve wording.
 const steps: JourneyStep[] = [
-  { n: "01", t: "The Bharat Summit", d: "", c: "s1" },
-  { n: "02", t: "Sharing best practice", d: "", c: "s2" },
-  { n: "03", t: "Dialogue on the economy", d: "", c: "s3" },
-  { n: "04", t: "A network that connects", d: "", c: "s4" },
+  { n: "01", t: "The Bharat Summit", d: "Curate Bharat Summit as an annual global event for all progressives to plan and work together", c: "s1" },
+  { n: "02", t: "Sharing best practice", d: "Enable inter-party sharing of best-practices (media, social media, diaspora mobilization etc.)", c: "s2" },
+  { n: "03", t: "Dialogue on the economy", d: "Facilitating dialogue with Indian governments and businesses on economic cooperation and investments (especially those that promote ecological, social, and economic justice)", c: "s3" },
+  { n: "04", t: "A network that connects", d: "Establishing network of think-tanks, and all social media & communications departments of progressives parties.", c: "s4" },
 ];
 
 export default function IndiaPage() {
@@ -30,7 +30,7 @@ export default function IndiaPage() {
           <div className="sec-head rv">
             <div>
               <div className="bars"><i /><i /><i /></div>
-              <h2>Four ways we work in India</h2>
+              <h2>India Initiatives</h2>
               <p>From a flagship annual summit to a lasting network of think tanks and party teams.</p>
             </div>
           </div>

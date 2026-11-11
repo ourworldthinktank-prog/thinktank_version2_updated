@@ -36,10 +36,10 @@ const back = (t: number) => {
 // Floating confetti that sweeps right to left at different speeds (parallax)
 type Shape = { x: number; y: number; s: number; t: "circle" | "ring" | "hex" | "tri" | "sq"; c: string; sp: number; rs: number; sy: number; f?: boolean };
 const SHAPES: Shape[] = [
-  { x: 6, y: 16, s: 26, t: "circle", c: "#C9E879", sp: 0.6, rs: 0.6, sy: 1 },
+  { x: 6, y: 16, s: 26, t: "circle", c: "#F5A12A", sp: 0.6, rs: 0.6, sy: 1 },
   { x: 20, y: 80, s: 46, t: "ring", c: "#27C6B7", sp: 1.0, rs: -0.8, sy: -1 },
   { x: 34, y: 10, s: 34, t: "hex", c: "#536DFF", sp: 0.8, rs: 0.5, sy: 1 },
-  { x: 48, y: 86, s: 22, t: "tri", c: "#C9E879", sp: 1.2, rs: 1.0, sy: -1, f: true },
+  { x: 48, y: 86, s: 22, t: "tri", c: "#F5A12A", sp: 1.2, rs: 1.0, sy: -1, f: true },
   { x: 60, y: 22, s: 54, t: "ring", c: "#8B5CFF", sp: 0.7, rs: 0.4, sy: 1 },
   { x: 72, y: 70, s: 30, t: "sq", c: "#27C6B7", sp: 1.1, rs: -0.9, sy: -1 },
   { x: 84, y: 12, s: 24, t: "circle", c: "#ffffff", sp: 0.9, rs: 0.3, sy: 1, f: true },
@@ -191,11 +191,11 @@ const css = `
 .jr-line { position: absolute; left: 17px; right: 17px; top: 50%; height: 3px; margin-top: -1.5px; background: rgba(255,255,255,.16); border-radius: 3px; }
 .jr-line i {
   display: block; height: 100%; border-radius: 3px; transform-origin: left; transform: scaleX(var(--fill, 0));
-  background: linear-gradient(90deg, #536DFF, #27C6B7, #C9E879);
+  background: linear-gradient(90deg, #536DFF, #27C6B7, #F5A12A);
 }
 .jr-run {
   position: absolute; top: 50%; left: calc(var(--fill, 0) * 100%); width: 14px; height: 14px; margin: -7px 0 0 -7px;
-  border-radius: 50%; background: #C9E879; box-shadow: 0 0 0 5px rgba(201,232,121,.25), 0 0 20px 4px rgba(201,232,121,.7);
+  border-radius: 50%; background: #F5A12A; box-shadow: 0 0 0 5px rgba(201,232,121,.25), 0 0 20px 4px rgba(201,232,121,.7);
 }
 .jr-stop {
   position: relative; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
@@ -203,7 +203,7 @@ const css = `
   font-size: .68rem; font-weight: 800; letter-spacing: .04em; color: rgba(255,255,255,.8);
 }
 .jr-stop::before {
-  content: ""; position: absolute; inset: -2px; border-radius: 50%; background: #C9E879;
+  content: ""; position: absolute; inset: -2px; border-radius: 50%; background: #F5A12A;
   opacity: var(--a, 0); scale: calc(.6 + var(--a, 0) * .4);
 }
 .jr-stop span { position: relative; color: color-mix(in srgb, #0b1030 calc(var(--a, 0) * 100%), #fff); }
