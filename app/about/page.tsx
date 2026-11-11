@@ -156,7 +156,7 @@ const css = `
   background: radial-gradient(circle, rgba(39,198,183,.12), transparent 68%);
   pointer-events: none;
 }
-.ab-aims { padding-top: clamp(44px, 6vw, 80px); }
+.ab-aims { padding-top: clamp(44px, 6vw, 60px); }
 .ab-aims-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 40px; }
 .ab-aims-head .ab-sub { max-width: 300px; margin: 0 0 5px; }
 .ab-ax { position: relative; z-index: 1; display: flex; height: clamp(400px, 46vw, 500px); border-radius: 20px; overflow: hidden; box-shadow: 0 30px 70px -40px rgba(20,32,63,.45); border: 1px solid #d8d9d3; background: #fff; }
@@ -311,7 +311,7 @@ export default function AboutPage() {
         </section>
 
         {/* Pillars: heading, then pinned scroll stage */}
-        <section className="ab-sec" style={{ paddingBottom: 56 }}>
+        <section className="ab-sec" style={{ paddingBottom: 0 }}>
           <div className="ab-wrap">
             <div className="ab-pillars-head ab-rv">
               <div>

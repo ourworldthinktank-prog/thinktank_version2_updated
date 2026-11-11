@@ -18,7 +18,7 @@ type Stream = { n: string; k: string; t: string; ac: string; on: string; acts: A
 
 const streams: Stream[] = [
   {
-    n: "01", k: "Ideas", t: "Research, Advocacy & Publications", ac: "#F5A12A", on: "#0b1030",
+    n: "01", k: "Ideas", t: "Research, Advocacy and Publications", ac: "#F5A12A", on: "#0b1030",
     acts: [
       { t: "An annual State of Global Progressivism report" },
       { t: "Mapping the Right’s conferences, think-tanks, foundations and initiatives" },
@@ -27,14 +27,14 @@ const streams: Stream[] = [
     ],
   },
   {
-    n: "03", k: "Voice", t: "Communications & Digital Media", ac: "#536DFF", on: "#ffffff",
+    n: "03", k: "Voice", t: "Communications and Digital Media", ac: "#536DFF", on: "#ffffff",
     acts: [
       { t: "Establishing a progressive global broadcasting channel, focused primarily on social and digital media, and creating a global federated network of smaller channels" },
       { t: "A progressive social media strategy initiative, supporting progressive candidates with cutting-edge data analytics, AI, crowd-funding and more" },
     ],
   },
   {
-    n: "02", k: "Gatherings", t: "Conferences & Workshops", ac: "#27C6B7", on: "#0b1030",
+    n: "02", k: "Gatherings", t: "Conferences and Workshops", ac: "#27C6B7", on: "#0b1030",
     acts: [
       {
         t: "Supporting think tanks to curate thematic conferences (on climate justice, digital democracy and more) and working groups in different nations, especially those heading into elections",
@@ -45,7 +45,7 @@ const streams: Stream[] = [
   },
 ];
 
-const words = ["Research", "Advocacy", "Publications", "Conferences", "Think tanks", "Civil society", "Unions", "Academics", "Digital media", "Social media", "Data & AI"];
+const words = ["Research", "Advocacy", "Publications", "Conferences", "Think tanks", "Civil society", "Unions", "Academics", "Digital media", "Social media", "Data and AI"];
 
 const pad = (n: number) => String(n).padStart(2, "0");
 const tone = (s: Stream) => ({ "--ac": s.ac, "--on": s.on }) as CSSProperties;

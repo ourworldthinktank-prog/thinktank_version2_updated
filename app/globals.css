@@ -289,3 +289,196 @@ body{overflow-x:clip}
   .cookie{flex-direction:column;align-items:stretch}
   .hero-stripes{display:none}
 }
+
+
+
+.india-container {
+  width: min(1160px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.india-heading {
+  max-width: 720px;
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.india-eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.stakeholder-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 920px;
+  margin: auto;
+}
+
+.stakeholder-card {
+  align-self: start;
+  border: 1px solid rgba(128, 128, 128, 0.25);
+  border-radius: 14px;
+  background: rgba(128, 128, 128, 0.05);
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.stakeholder-card:hover {
+  transform: translateY(-3px);
+}
+
+.stakeholder-card summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 72px;
+  padding: 16px 20px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.stakeholder-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.stakeholder-number {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.stakeholder-title {
+  flex: 1;
+  font-weight: 600;
+}
+
+.stakeholder-toggle {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 20px;
+  transition: transform 0.25s ease;
+}
+
+.stakeholder-card[open] .stakeholder-toggle {
+  transform: rotate(45deg);
+}
+
+.stakeholder-content p {
+  margin: 0;
+  padding: 0 20px 20px 48px;
+  font-size: 14px;
+  line-height: 1.75;
+  opacity: 0.8;
+  animation: stakeholder-reveal 0.3s ease both;
+}
+
+@keyframes stakeholder-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 0.8;
+    transform: translateY(0);
+  }
+}
+
+.india-summit {
+  padding: clamp(60px, 8vw, 100px) 0;
+}
+
+.india-summit .india-container {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr;
+  align-items: center;
+  gap: 60px;
+}
+
+.india-summit-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 13px 22px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: transform 0.25s ease;
+}
+
+.india-summit-link:hover {
+  transform: translateY(-3px);
+}
+
+.india-poster-link {
+  display: block;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.india-poster-link:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.2);
+}
+
+.india-poster-link img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.stakeholder-card summary:focus-visible,
+.india-summit-link:focus-visible,
+.india-poster-link:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 5px;
+}
+
+@media (max-width: 700px) {
+  .india-container {
+    width: calc(100% - 32px);
+  }
+
+  .stakeholder-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .india-summit .india-container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .india-summit-content {
+    text-align: center;
+  }
+
+  .india-poster-link {
+    width: min(100%, 380px);
+    margin-inline: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stakeholder-card,
+  .stakeholder-toggle,
+  .india-summit-link,
+  .india-poster-link {
+    transition: none;
+  }
+
+  .stakeholder-content p {
+    animation: none;
+  }
+}
+
