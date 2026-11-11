@@ -152,7 +152,7 @@ export default function GlobalPage() {
   return (
     <Shell>
       <style>{CSS}</style>
-      <PageBanner variant="global" title="Global Initiative" />
+      <PageBanner variant="global" />
       <div className="marquee" aria-hidden="true">
         <div className="marquee-track">
           {[...words, ...words].map((w, i) => <span key={i}>{w}</span>)}
