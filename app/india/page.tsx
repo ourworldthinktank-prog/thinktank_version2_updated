@@ -51,7 +51,7 @@ export default function IndiaPage() {
       </p>
     </div>
 
-    <PeopleWheel items={["Progressive parties", "Think tanks", "Governments", "Businesses", "Diaspora", "Communication teams"]} />
+    <PeopleWheel items={["Progressive parties", "Think tanks", "Governments", "Businesses", "Diaspora", "Communications teams"]} />
   </div>
 </section>
 
@@ -63,14 +63,6 @@ export default function IndiaPage() {
         <h2>The flagship: Bharat Summit</h2>
         <p>An annual global event for all progressives to plan and work together, in Hyderabad.</p>
 
-<div className="summit-image">
-        <img
-          src="/assets/bharath_summit.jpeg"
-          alt="Bharat Summit"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
         <a
           className="btn btn-primary"
           href={BHARAT_SUMMIT_URL}
@@ -79,6 +71,15 @@ export default function IndiaPage() {
         >
           Visit Bharat Summit website <ArrowIcon />
         </a>
+      </div>
+
+      <div className="summit-image">
+        <img
+          src="/assets/bharath_summit.jpeg"
+          alt="Bharat Summit"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
     </div>
   </div>
@@ -90,6 +91,18 @@ export default function IndiaPage() {
 
 
 
+
+
+<style>{`
+  /* Bharat Summit poster: whole poster is always shown (never cropped), same look on desktop and phone */
+  .cta.summit-cta{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,380px);gap:clamp(24px,4vw,56px);align-items:center}
+  .summit-cta .summit-image{width:100%;max-width:380px;margin:0 auto;border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 22px 50px rgba(11,27,68,.22);line-height:0}
+  .summit-cta .summit-image img{display:block;width:100%;height:auto;object-fit:contain}
+  @media (max-width: 800px){
+    .cta.summit-cta{grid-template-columns:1fr;text-align:left}
+    .summit-cta .summit-image{max-width:340px}
+  }
+`}</style>
 
   </Shell>
   );

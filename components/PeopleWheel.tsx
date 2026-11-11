@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const COLORS = ["#ef493b", "#7778c9", "#a6c92b", "#16ae9c", "#f3bd18", "#17b6d1"];
+const GLOBE_GIF = "/assets/globe.gif";   // put your globe GIF at public/assets/globe.gif
+const COLORS = ["#f5a12a", "#7778c9", "#a6c92b", "#16ae9c", "#f3bd18", "#17b6d1"];
 const ANGLES = [-90, -30, 30, 90, 150, 210];   // clockwise from the top
 const R = 36;                                    // ring radius in a 100 x 100 box
 
@@ -24,7 +25,7 @@ const CSS = `
 .pw-comet{transform-origin:50px 50px;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
 
 .pw-core{position:absolute;left:50%;top:50%;width:42%;aspect-ratio:1;translate:-50% -50%;pointer-events:none}
-.pw-globe{display:block;width:100%;height:100%;filter:drop-shadow(0 14px 30px color-mix(in srgb,var(--ac) 40%,transparent));transition:filter .6s}
+.pw-globe{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 14px 30px color-mix(in srgb,var(--ac) 40%,transparent));transition:filter .6s}
 
 .pw-node{position:absolute;translate:-50% -50%;width:var(--nd);height:var(--nd);border-radius:50%;display:grid;place-items:center;align-content:center;box-sizing:border-box;padding:0 calc(var(--nd) * .09);text-align:center;cursor:pointer;
   background:#fff;border:4px solid color-mix(in srgb,var(--c) 38%,#cfd6e6);color:#1b2447;font:inherit;font-weight:700;font-size:calc(var(--s) * .0245);line-height:1.25;
@@ -55,106 +56,11 @@ const CSS = `
 }
 `;
 
-// A real globe, drawn from the same land data as the Bharat Summit globe. It turns as the page scrolls.
-function GlobeSpin({ pRef }: { pRef: { current: number } }) {
-  const cv = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = cv.current!;
-    const ctx = canvas.getContext("2d")!;
-    let pts: { x: number; y: number; z: number; c: number }[] = [];
-    let alive = true, vis = true, raf = 0;
-    let rot = -78 * Math.PI / 180, size = 0;
-    const TILT = 0.38;
-    const COLS = ["#1E9C8C", "#14A68F", "#F5A12A", "#F26B3A", "rgba(31,193,222,.55)"];
-
-    const vec = (lon: number, lat: number) => {
-      const a = lat * Math.PI / 180, l = lon * Math.PI / 180;
-      return { x: Math.cos(a) * Math.sin(l), y: Math.sin(a), z: Math.cos(a) * Math.cos(l), l };
-    };
-
-    const fit = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      size = canvas.clientWidth;
-      canvas.width = size * dpr; canvas.height = size * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-
-    const draw = () => {
-      const R = size * 0.46, c = size / 2;
-      ctx.clearRect(0, 0, size, size);
-      // sphere body
-      const g = ctx.createRadialGradient(c - R * 0.35, c - R * 0.4, R * 0.1, c, c, R);
-      g.addColorStop(0, "#ffffff"); g.addColorStop(0.6, "#e4ecff"); g.addColorStop(1, "#b9cdf7");
-      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(c, c, R, 0, Math.PI * 2); ctx.fill();
-      const ct = Math.cos(TILT), st = Math.sin(TILT), cr = Math.cos(rot), sr = Math.sin(rot);
-      const cols = COLS.map(() => [] as number[]);
-      for (const p of pts) {
-        // spin about the vertical axis, then tilt
-        const x1 = p.x * cr + p.z * sr, z1 = -p.x * sr + p.z * cr;
-        const y2 = p.y * ct - z1 * st, z2 = p.y * st + z1 * ct;
-        if (z2 <= 0.02) continue;
-        cols[p.c].push(c + R * x1, c - R * y2, z2);
-      }
-      for (let k = 0; k < cols.length; k++) {
-        const a = cols[k];
-        ctx.fillStyle = COLS[k];
-        for (let i = 0; i < a.length; i += 3) {
-          const s = (k === 4 ? 1.1 : 1.8) * (0.55 + a[i + 2] * 0.7) * (size / 220);
-          ctx.fillRect(a[i] - s / 2, a[i + 1] - s / 2, s, s);
-        }
-      }
-      // soft rim shading so it reads as a ball
-      const rim = ctx.createRadialGradient(c, c, R * 0.62, c, c, R);
-      rim.addColorStop(0, "rgba(11,27,68,0)"); rim.addColorStop(1, "rgba(11,27,68,.28)");
-      ctx.fillStyle = rim; ctx.beginPath(); ctx.arc(c, c, R, 0, Math.PI * 2); ctx.fill();
-    };
-
-    const loop = () => {
-      if (!alive) return;
-      const target = -78 * Math.PI / 180 + pRef.current * Math.PI * 4;   // two full turns across the section
-      const d = target - rot;
-      if (Math.abs(d) > 0.0004) { rot += d * 0.12; draw(); }
-      raf = vis ? requestAnimationFrame(loop) : 0;
-    };
-
-    fit();
-    const io = new IntersectionObserver(([e]) => { vis = e.isIntersecting; if (vis && !raf) raf = requestAnimationFrame(loop); });
-    io.observe(canvas);
-    const onResize = () => { fit(); draw(); };
-    window.addEventListener("resize", onResize);
-
-    fetch("/globe-data.json").then((r) => r.json()).then((d: { land: number[]; sea: number[]; indiaPts: number[] }) => {
-      if (!alive) return;
-      const out: typeof pts = [];
-      for (let i = 0; i < d.land.length; i += 2) {
-        const lon = d.land[i] / 10, lat = d.land[i + 1] / 10, v = vec(lon, lat);
-        out.push({ x: v.x, y: v.y, z: v.z, c: Math.random() < 0.06 ? 2 : Math.random() < 0.5 ? 0 : 1 });
-      }
-      for (let i = 0; i < d.indiaPts.length; i += 2) {
-        const v = vec(d.indiaPts[i] / 100, d.indiaPts[i + 1] / 100);
-        out.push({ x: v.x, y: v.y, z: v.z, c: 3 });
-      }
-      for (let i = 0; i < d.sea.length; i += 14) {
-        const v = vec(d.sea[i] / 10, d.sea[i + 1] / 10);
-        out.push({ x: v.x, y: v.y, z: v.z, c: 4 });
-      }
-      pts = out; draw();
-      if (!raf) raf = requestAnimationFrame(loop);
-    }).catch(() => {});
-
-    return () => { alive = false; cancelAnimationFrame(raf); io.disconnect(); window.removeEventListener("resize", onResize); };
-  }, [pRef]);
-
-  return <canvas ref={cv} className="pw-globe" aria-hidden="true" />;
-}
-
 // A ring of six circles. As the page scrolls, they light up one by one, 1 to 6,
 // while a glowing dot travels round the ring and a line draws to the active circle.
 export default function PeopleWheel({ items }: { items: string[] }) {
   const stage = useRef<HTMLDivElement>(null);
   const [idx, setIdx] = useState(0);
-  const prog = useRef(0);
   const n = items.length;
 
   useEffect(() => {
@@ -166,7 +72,6 @@ export default function PeopleWheel({ items }: { items: string[] }) {
       const r = el.getBoundingClientRect();
       const range = Math.max(1, r.height - window.innerHeight);
       const p = Math.min(0.9999, Math.max(0, -r.top / range));
-      prog.current = p;
       setIdx(Math.min(n - 1, Math.floor(p * n)));
     };
     const onScroll = () => { if (!tick) { tick = true; requestAnimationFrame(update); } };
@@ -219,7 +124,10 @@ export default function PeopleWheel({ items }: { items: string[] }) {
             </g>
           </svg>
 
-          <div className="pw-core" aria-hidden="true"><GlobeSpin pRef={prog} /></div>
+          <div className="pw-core" aria-hidden="true">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="pw-globe" src={GLOBE_GIF} alt="" width={200} height={200} />
+          </div>
 
           {items.map((t, i) => {
             const p = pos(i);
